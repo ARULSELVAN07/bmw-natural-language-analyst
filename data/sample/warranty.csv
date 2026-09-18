@@ -1,0 +1,11 @@
+vehicle_id,model,city,warranty_date,fault_type,warranty_cost
+1001,BMW X1,Chennai,2026-02-10,Engine,45000
+1002,BMW X3,Chennai,2026-02-22,Electrical,65000
+1005,BMW i4,Chennai,2026-03-18,Battery,125000
+1009,BMW 5 Series,Chennai,2026-05-11,Infotainment,55000
+1003,BMW 3 Series,Mumbai,2026-02-28,Brake,38000
+1007,BMW X1,Mumbai,2026-04-02,Suspension,42000
+1004,BMW X5,Delhi,2026-03-05,Engine,95000
+1008,BMW X3,Delhi,2026-04-20,Electrical,72000
+1006,BMW iX,Bengaluru,2026-04-15,Battery,145000
+1010,BMW i4,Bengaluru,2026-05-20,Charging,85000

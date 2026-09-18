@@ -1,0 +1,11 @@
+vehicle_id,model,city,battery_date,battery_percentage,battery_status
+1001,BMW X1,Chennai,2026-06-01,92,Healthy
+1002,BMW X3,Chennai,2026-06-01,86,Healthy
+1003,BMW 3 Series,Mumbai,2026-06-01,78,Healthy
+1004,BMW X5,Delhi,2026-06-01,81,Healthy
+1005,BMW i4,Chennai,2026-06-01,48,Warning
+1006,BMW iX,Bengaluru,2026-06-01,35,Critical
+1007,BMW X1,Mumbai,2026-06-01,74,Healthy
+1008,BMW X3,Delhi,2026-06-01,68,Healthy
+1009,BMW 5 Series,Chennai,2026-06-01,89,Healthy
+1010,BMW i4,Bengaluru,2026-06-01,52,Warning

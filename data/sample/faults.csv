@@ -1,0 +1,11 @@
+vehicle_id,model,city,fault_date,fault_type,severity
+1001,BMW X1,Chennai,2026-02-10,Engine,High
+1002,BMW X3,Chennai,2026-02-22,Electrical,Medium
+1005,BMW i4,Chennai,2026-03-18,Battery,High
+1009,BMW 5 Series,Chennai,2026-05-11,Infotainment,Low
+1003,BMW 3 Series,Mumbai,2026-02-28,Brake,Medium
+1007,BMW X1,Mumbai,2026-04-02,Suspension,Medium
+1004,BMW X5,Delhi,2026-03-05,Engine,High
+1008,BMW X3,Delhi,2026-04-20,Electrical,Medium
+1006,BMW iX,Bengaluru,2026-04-15,Battery,High
+1010,BMW i4,Bengaluru,2026-05-20,Charging,Medium
