@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import time
 
 # --------------------------------------------------
 # Page Configuration
@@ -37,14 +36,6 @@ st.markdown(
             border: 1px solid #ddd;
             background-color: #fafafa;
         }
-
-        .time-box {
-            padding: 10px 15px;
-            border-radius: 8px;
-            background-color: #f5f5f5;
-            border: 1px solid #ddd;
-            margin: 10px 0;
-        }
     </style>
     """,
     unsafe_allow_html=True,
@@ -71,7 +62,6 @@ st.markdown(
 # --------------------------------------------------
 
 with st.sidebar:
-
     st.header("⚙️ Configuration")
 
     api_url = st.text_input(
@@ -112,13 +102,8 @@ examples = [
 cols = st.columns(2)
 
 for index, example in enumerate(examples):
-
     with cols[index % 2]:
-
-        if st.button(
-            example,
-            use_container_width=True,
-        ):
+        if st.button(example, use_container_width=True):
             st.session_state.question = example
 
 # --------------------------------------------------
@@ -138,11 +123,7 @@ question = st.text_area(
 # Ask Button
 # --------------------------------------------------
 
-if st.button(
-    "🔍 Analyze",
-    type="primary",
-    use_container_width=True,
-):
+if st.button("🔍 Analyze", type="primary", use_container_width=True):
 
     if not question.strip():
         st.warning("Please enter a question.")
@@ -152,25 +133,14 @@ if st.button(
         "question": question.strip()
     }
 
-    # Start timer
-    start_time = time.perf_counter()
-
     with st.spinner("Analyzing BMW data..."):
 
         try:
-
             response = requests.post(
                 f"{api_url.rstrip('/')}/ask",
                 json=payload,
                 timeout=120,
             )
-
-            # End timer
-            execution_time = time.perf_counter() - start_time
-
-            # --------------------------------------------------
-            # Successful Response
-            # --------------------------------------------------
 
             if response.status_code == 200:
 
@@ -178,23 +148,9 @@ if st.button(
 
                 st.success("Analysis completed")
 
-                # --------------------------------------------------
-                # Execution Time
-                # --------------------------------------------------
-
-                st.markdown(
-                    f"""
-                    <div class="time-box">
-                        ⏱️ <strong>Execution Time:</strong>
-                        {execution_time:.2f} seconds
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-
-                # --------------------------------------------------
+                # ------------------------------------------
                 # Narrative Answer
-                # --------------------------------------------------
+                # ------------------------------------------
 
                 st.subheader("📊 Analysis")
 
@@ -204,7 +160,7 @@ if st.button(
                         "narrative",
                         result.get(
                             "response",
-                            "No answer returned.",
+                            "No answer returned."
                         ),
                     ),
                 )
@@ -214,41 +170,30 @@ if st.button(
                     unsafe_allow_html=True,
                 )
 
-                # --------------------------------------------------
+                # ------------------------------------------
                 # SQL
-                # --------------------------------------------------
+                # ------------------------------------------
 
                 sql = result.get("sql")
 
                 if sql:
-
                     with st.expander("🔎 Generated SQL"):
-                        st.code(
-                            sql,
-                            language="sql",
-                        )
+                        st.code(sql, language="sql")
 
-                # --------------------------------------------------
+                # ------------------------------------------
                 # Raw Data
-                # --------------------------------------------------
+                # ------------------------------------------
 
                 data = result.get("data")
 
                 if data:
-
                     with st.expander("📋 Query Result"):
-
                         st.dataframe(
                             data,
                             use_container_width=True,
                         )
 
-            # --------------------------------------------------
-            # API Error
-            # --------------------------------------------------
-
             else:
-
                 st.error(
                     f"API request failed: {response.status_code}"
                 )
@@ -258,12 +203,7 @@ if st.button(
                 except Exception:
                     st.code(response.text)
 
-        # --------------------------------------------------
-        # Connection Error
-        # --------------------------------------------------
-
         except requests.exceptions.ConnectionError:
-
             st.error(
                 "Cannot connect to the BMW Analyst API."
             )
@@ -272,22 +212,12 @@ if st.button(
                 f"Make sure the API is running at: {api_url}"
             )
 
-        # --------------------------------------------------
-        # Timeout
-        # --------------------------------------------------
-
         except requests.exceptions.Timeout:
-
             st.error(
                 "The request timed out. Please try again."
             )
 
-        # --------------------------------------------------
-        # Other Error
-        # --------------------------------------------------
-
         except Exception as exc:
-
             st.error(
                 f"Unexpected error: {exc}"
             )
