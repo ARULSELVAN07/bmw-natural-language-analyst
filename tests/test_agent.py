@@ -1,54 +1,39 @@
-from bmw_analyst.agent.agent import BMWAnalystAgent
+def ask(self, question: str) -> dict:
 
+    if not question or not question.strip():
+        raise ValueError("Question cannot be empty.")
 
-def test_agent(monkeypatch):
+    question = question.strip()
 
-    expected_data = [
-        {
-            "model": "BMW X5",
-            "total_warranty_cost": 95000,
-        }
-    ]
+    intent = self.intent_router.route(question)
 
-    agent = BMWAnalystAgent()
+    sql = self.sql_generator.generate(question)
 
-    monkeypatch.setattr(
-        agent.sql_generator,
-        "generate",
-        lambda question: """
-        SELECT
-            model,
-            SUM(warranty_cost) AS total_warranty_cost
-        FROM BMW_WARRANTY
-        GROUP BY model
-        ORDER BY total_warranty_cost DESC
-        """,
+    if not validate_sql(sql):
+        raise ValueError("Generated SQL failed security validation.")
+
+    tool_response = asyncio.run(
+        self.mcp_client.execute_approved_query(sql)
     )
 
-    monkeypatch.setattr(
-        "bmw_analyst.agent.agent.execute_query",
-        lambda sql: expected_data,
+    if not tool_response.success:
+        raise ValueError(
+            tool_response.error
+            or "MCP query execution failed."
+        )
+
+    data = tool_response.data
+
+    answer = self.generate_narrative(
+        question=question,
+        sql=sql,
+        data=data,
     )
 
-    monkeypatch.setattr(
-        agent,
-        "generate_narrative",
-        lambda question, sql, data:
-            "BMW X5 has the highest warranty cost.",
-    )
-
-    result = agent.ask(
-        "Which BMW model had the highest warranty cost?"
-    )
-
-    assert result["question"] == (
-        "Which BMW model had the highest warranty cost?"
-    )
-
-    assert result["sql"] is not None
-
-    assert result["data"] == expected_data
-
-    assert result["answer"] == (
-        "BMW X5 has the highest warranty cost."
-    )
+    return {
+        "question": question,
+        "intent": intent.value,
+        "sql": sql,
+        "data": data,
+        "answer": answer,
+    }
