@@ -1,6 +1,7 @@
 import os
 import json
 from pathlib import Path
+
 import boto3
 from dotenv import load_dotenv
 
@@ -12,25 +13,55 @@ from dotenv import load_dotenv
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 ENV_FILE = PROJECT_ROOT / ".env"
 
-load_dotenv(ENV_FILE)
+# Load .env when it exists.
+# Existing environment variables are NOT overwritten.
+if ENV_FILE.exists():
+    load_dotenv(ENV_FILE, override=False)
+
+
+# -------------------------------------------------
+# AWS Configuration
+# -------------------------------------------------
 
 AWS_REGION = os.getenv("AWS_REGION", "ap-south-1")
 
 
 def _load_secret_values() -> dict[str, str]:
+    """
+    Load optional configuration from AWS Secrets Manager.
+
+    Secrets Manager is only contacted when
+    AWS_SECRETS_MANAGER_SECRET_NAME is configured.
+    """
+
     secret_name = os.getenv("AWS_SECRETS_MANAGER_SECRET_NAME")
+
     if not secret_name:
         return {}
 
     response = boto3.client(
         "secretsmanager",
         region_name=AWS_REGION,
-    ).get_secret_value(SecretId=secret_name)
-    secret_string = response.get("SecretString", "{}")
+    ).get_secret_value(
+        SecretId=secret_name
+    )
+
+    secret_string = response.get(
+        "SecretString",
+        "{}",
+    )
+
     values = json.loads(secret_string)
+
     if not isinstance(values, dict):
-        raise RuntimeError("Secrets Manager secret must contain a JSON object.")
-    return {str(key): str(value) for key, value in values.items()}
+        raise RuntimeError(
+            "Secrets Manager secret must contain a JSON object."
+        )
+
+    return {
+        str(key): str(value)
+        for key, value in values.items()
+    }
 
 
 _SECRET_VALUES = _load_secret_values()
@@ -41,29 +72,75 @@ _SECRET_VALUES = _load_secret_values()
 # -------------------------------------------------
 
 def get_required_env(name: str) -> str:
-    value = os.getenv(name) or _SECRET_VALUES.get(name)
+    """
+    Resolve configuration in this order:
 
-    if not value:
-        raise RuntimeError(
-            f"Required environment variable '{name}' "
-            f"is missing from {ENV_FILE}"
-        )
+    1. Operating-system environment
+       - GitHub Actions
+       - Docker
+       - Kubernetes
+       - local terminal
 
-    return value
+    2. .env file
+
+    3. AWS Secrets Manager
+
+    This allows CI to run without requiring
+    a .env file.
+    """
+
+    value = os.getenv(name)
+
+    if value:
+        return value
+
+    value = _SECRET_VALUES.get(name)
+
+    if value:
+        return value
+
+    raise RuntimeError(
+        f"Required configuration '{name}' is not set. "
+        f"Set it as an environment variable, in .env, "
+        f"or in AWS Secrets Manager."
+    )
 
 
 # -------------------------------------------------
 # Snowflake Configuration
 # -------------------------------------------------
 
-SNOWFLAKE_ACCOUNT = get_required_env("SNOWFLAKE_ACCOUNT")
-SNOWFLAKE_USER = get_required_env("SNOWFLAKE_USER")
-SNOWFLAKE_PASSWORD = get_required_env("SNOWFLAKE_PASSWORD")
-SNOWFLAKE_AUTHENTICATOR = get_required_env("SNOWFLAKE_AUTHENTICATOR")
-SNOWFLAKE_ROLE = get_required_env("SNOWFLAKE_ROLE")
-SNOWFLAKE_WAREHOUSE = get_required_env("SNOWFLAKE_WAREHOUSE")
-SNOWFLAKE_DATABASE = get_required_env("SNOWFLAKE_DATABASE")
-SNOWFLAKE_SCHEMA = get_required_env("SNOWFLAKE_SCHEMA")
+SNOWFLAKE_ACCOUNT = get_required_env(
+    "SNOWFLAKE_ACCOUNT"
+)
+
+SNOWFLAKE_USER = get_required_env(
+    "SNOWFLAKE_USER"
+)
+
+SNOWFLAKE_PASSWORD = get_required_env(
+    "SNOWFLAKE_PASSWORD"
+)
+
+SNOWFLAKE_AUTHENTICATOR = get_required_env(
+    "SNOWFLAKE_AUTHENTICATOR"
+)
+
+SNOWFLAKE_ROLE = get_required_env(
+    "SNOWFLAKE_ROLE"
+)
+
+SNOWFLAKE_WAREHOUSE = get_required_env(
+    "SNOWFLAKE_WAREHOUSE"
+)
+
+SNOWFLAKE_DATABASE = get_required_env(
+    "SNOWFLAKE_DATABASE"
+)
+
+SNOWFLAKE_SCHEMA = get_required_env(
+    "SNOWFLAKE_SCHEMA"
+)
 
 
 def get_snowflake_config() -> dict:
@@ -83,35 +160,62 @@ def get_snowflake_config() -> dict:
 # AWS / Bedrock Configuration
 # -------------------------------------------------
 
-BEDROCK_MODEL_ID = get_required_env("BEDROCK_MODEL_ID")
+BEDROCK_MODEL_ID = get_required_env(
+    "BEDROCK_MODEL_ID"
+)
 
 
 # -------------------------------------------------
 # API Configuration
 # -------------------------------------------------
 
-API_HOST = get_required_env("API_HOST")
-API_PORT = int(get_required_env("API_PORT"))
+API_HOST = get_required_env(
+    "API_HOST"
+)
+
+API_PORT = int(
+    get_required_env("API_PORT")
+)
 
 
 # -------------------------------------------------
 # Streamlit Configuration
 # -------------------------------------------------
 
-STREAMLIT_HOST = get_required_env("STREAMLIT_HOST")
-STREAMLIT_PORT = int(get_required_env("STREAMLIT_PORT"))
+STREAMLIT_HOST = get_required_env(
+    "STREAMLIT_HOST"
+)
 
-# Optional for local development; production deployments should set it.
-API_KEY = os.getenv("API_KEY") or _SECRET_VALUES.get("API_KEY")
+STREAMLIT_PORT = int(
+    get_required_env("STREAMLIT_PORT")
+)
+
+
+# Optional for local development.
+# Production deployments should configure this
+# through environment variables or Secrets Manager.
+
+API_KEY = (
+    os.getenv("API_KEY")
+    or _SECRET_VALUES.get("API_KEY")
+)
 
 
 # -------------------------------------------------
 # Application Configuration
 # -------------------------------------------------
 
-MCP_SERVER_NAME = get_required_env("MCP_SERVER_NAME")
-APP_NAME = get_required_env("APP_NAME")
-LOG_LEVEL = get_required_env("LOG_LEVEL")
+MCP_SERVER_NAME = get_required_env(
+    "MCP_SERVER_NAME"
+)
+
+APP_NAME = get_required_env(
+    "APP_NAME"
+)
+
+LOG_LEVEL = get_required_env(
+    "LOG_LEVEL"
+)
 
 
 # -------------------------------------------------
@@ -168,6 +272,7 @@ MAX_QUERY_ROWS = 1000
 QUERY_TIMEOUT_SECONDS = 30
 
 QUERY_RETRY_ATTEMPTS = 3
+
 QUERY_RETRY_BACKOFF_SECONDS = 0.5
 
 MAX_QUESTION_LENGTH = 1000
