@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
@@ -12,7 +13,36 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      # Snowflake CI configuration
+      SNOWFLAKE_ACCOUNT: ci-test-account
+      SNOWFLAKE_USER: ci-test-user
+      SNOWFLAKE_PASSWORD: ci-test-password
+      SNOWFLAKE_AUTHENTICATOR: snowflake
+      SNOWFLAKE_ROLE: BMW_ANALYST_READONLY
+      SNOWFLAKE_WAREHOUSE: BMW_WH
+      SNOWFLAKE_DATABASE: BMW_ANALYTICS
+      SNOWFLAKE_SCHEMA: BMW_DATA
+
+      # AWS / Bedrock configuration
+      AWS_REGION: ap-south-1
+      BEDROCK_MODEL_ID: global.amazon.nova-2-lite-v1:0
+
+      # API configuration
+      API_HOST: 127.0.0.1
+      API_PORT: 8000
+
+      # Streamlit configuration
+      STREAMLIT_HOST: 127.0.0.1
+      STREAMLIT_PORT: 8501
+
+      # Application configuration
+      MCP_SERVER_NAME: BMW Natural Language Analyst
+      APP_NAME: BMW Natural Language Data Analyst
+      LOG_LEVEL: INFO
+
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -27,5 +57,8 @@ jobs:
       - name: Install project and development dependencies
         run: python -m pip install -e ".[dev]"
 
-      - name: Run tests
-        run: python -m pytest -q
+      - name: Compile Python sources
+        run: python -m compileall -q src config tests
+
+      - name: Run unit and security tests
+        run: python -m pytest -q -m "not integration"
