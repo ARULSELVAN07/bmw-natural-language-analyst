@@ -155,3 +155,34 @@ def test_successful_question(monkeypatch):
     assert result["sql"] == expected_result["sql"]
     assert result["data"] == expected_result["data"]
     assert result["answer"] == expected_result["answer"]
+
+
+def test_api_key_is_required_when_configured(monkeypatch):
+    from bmw_analyst.api import main
+
+    monkeypatch.setattr(main, "API_KEY", "test-key")
+
+    def fail_ask(question):
+        raise RuntimeError("test failure")
+
+    monkeypatch.setattr(
+        main.agent,
+        "ask",
+        fail_ask,
+    )
+
+    response = client.post(
+        "/ask",
+        json={"question": "Show warranty cost"},
+    )
+
+    assert response.status_code == 401
+
+    response = client.post(
+        "/ask",
+        json={"question": "Show warranty cost"},
+        headers={"X-API-Key": "test-key", "X-Request-ID": "request-123"},
+    )
+
+    assert response.status_code == 500
+    assert response.headers["X-Request-ID"] == "request-123"

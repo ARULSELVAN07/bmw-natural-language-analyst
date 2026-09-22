@@ -1,4 +1,4 @@
-mcp
+mcp<2
 snowflake-connector-python[secure-local-storage]
 boto3
 pydantic>=2.0

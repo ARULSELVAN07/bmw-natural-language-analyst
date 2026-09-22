@@ -1,5 +1,7 @@
 import os
+import json
 from pathlib import Path
+import boto3
 from dotenv import load_dotenv
 
 
@@ -12,13 +14,34 @@ ENV_FILE = PROJECT_ROOT / ".env"
 
 load_dotenv(ENV_FILE)
 
+AWS_REGION = os.getenv("AWS_REGION", "ap-south-1")
+
+
+def _load_secret_values() -> dict[str, str]:
+    secret_name = os.getenv("AWS_SECRETS_MANAGER_SECRET_NAME")
+    if not secret_name:
+        return {}
+
+    response = boto3.client(
+        "secretsmanager",
+        region_name=AWS_REGION,
+    ).get_secret_value(SecretId=secret_name)
+    secret_string = response.get("SecretString", "{}")
+    values = json.loads(secret_string)
+    if not isinstance(values, dict):
+        raise RuntimeError("Secrets Manager secret must contain a JSON object.")
+    return {str(key): str(value) for key, value in values.items()}
+
+
+_SECRET_VALUES = _load_secret_values()
+
 
 # -------------------------------------------------
 # Environment Helpers
 # -------------------------------------------------
 
 def get_required_env(name: str) -> str:
-    value = os.getenv(name)
+    value = os.getenv(name) or _SECRET_VALUES.get(name)
 
     if not value:
         raise RuntimeError(
@@ -60,7 +83,6 @@ def get_snowflake_config() -> dict:
 # AWS / Bedrock Configuration
 # -------------------------------------------------
 
-AWS_REGION = get_required_env("AWS_REGION")
 BEDROCK_MODEL_ID = get_required_env("BEDROCK_MODEL_ID")
 
 
@@ -78,6 +100,9 @@ API_PORT = int(get_required_env("API_PORT"))
 
 STREAMLIT_HOST = get_required_env("STREAMLIT_HOST")
 STREAMLIT_PORT = int(get_required_env("STREAMLIT_PORT"))
+
+# Optional for local development; production deployments should set it.
+API_KEY = os.getenv("API_KEY") or _SECRET_VALUES.get("API_KEY")
 
 
 # -------------------------------------------------
@@ -141,5 +166,8 @@ BLOCKED_SQL_COMMANDS = {
 MAX_QUERY_ROWS = 1000
 
 QUERY_TIMEOUT_SECONDS = 30
+
+QUERY_RETRY_ATTEMPTS = 3
+QUERY_RETRY_BACKOFF_SECONDS = 0.5
 
 MAX_QUESTION_LENGTH = 1000

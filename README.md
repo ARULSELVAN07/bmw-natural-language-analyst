@@ -2,7 +2,9 @@
 
 ## Overview
 
-Natural Language BMW Data Analyst using:
+The **BMW Natural Language Data Analyst** allows business users to ask BMW analytics questions using natural language instead of manually writing SQL queries.
+
+The application uses:
 
 * Python
 * Amazon Bedrock
@@ -12,7 +14,9 @@ Natural Language BMW Data Analyst using:
 * Streamlit
 * Terraform
 
-The application allows business users to ask BMW analytics questions in natural language instead of manually writing SQL.
+The system converts a natural-language question into a secure SQL query, executes the query through an MCP server against Snowflake, and generates a natural-language explanation of the results.
+
+---
 
 ## Architecture
 
@@ -44,45 +48,78 @@ LLM Narrative Generator
 Streamlit UI
 ```
 
+---
+
+## Technologies
+
+| Technology     | Purpose                                               |
+| -------------- | ----------------------------------------------------- |
+| Python         | Application development                               |
+| Amazon Bedrock | SQL generation and narrative generation               |
+| MCP            | Tool-based communication between agent and data layer |
+| Snowflake      | BMW analytics data warehouse                          |
+| FastAPI        | Backend REST API                                      |
+| Streamlit      | User interface                                        |
+| Terraform      | Snowflake infrastructure provisioning                 |
+| Pytest         | Automated testing                                     |
+
+---
+
 ## MCP Tools
 
-The MCP server provides:
+The MCP server provides the following tools:
 
-* `vehicle_sales`
-* `warranty_cost`
-* `fault_summary`
-* `battery_status`
-* `execute_approved_query`
+```text
+vehicle_sales
+warranty_cost
+fault_summary
+battery_status
+execute_approved_query
+```
 
-The application uses `execute_approved_query` for dynamically generated analytical SQL.
+The dynamically generated analytical SQL is executed through:
+
+```text
+execute_approved_query()
+```
+
+The MCP client starts the MCP server as a subprocess using the current Python interpreter.
+
+Always activate the project virtual environment before starting the API or running tests.
+
+```powershell
+.\bmwvenv\Scripts\Activate.ps1
+```
+
+---
 
 ## Snowflake
 
-Database:
+### Database
 
 ```text
 BMW_ANALYTICS
 ```
 
-Schema:
+### Schema
 
 ```text
 BMW_DATA
 ```
 
-Warehouse:
+### Warehouse
 
 ```text
 BMW_WH
 ```
 
-Read-only role:
+### Read-only Role
 
 ```text
 BMW_ANALYST_READONLY
 ```
 
-Approved tables:
+### Approved Tables
 
 ```text
 BMW_VEHICLE_SALES
@@ -91,17 +128,23 @@ BMW_FAULTS
 BMW_BATTERY
 ```
 
+The application is designed to access only the approved BMW analytics tables.
+
+---
+
 ## Security
 
-The application implements:
+The application implements multiple layers of security.
+
+### SQL Security
 
 * SELECT-only SQL validation
 * Single-statement validation
-* Approved database/schema validation
+* Approved database validation
+* Approved schema validation
 * Approved table validation
 * Approved column validation
 * Blocked SQL commands
-* Read-only Snowflake role
 * Maximum 1000 returned rows
 * 30-second query timeout
 * Maximum question length of 1000 characters
@@ -122,11 +165,23 @@ GRANT
 REVOKE
 ```
 
+### Snowflake Security
+
+The application uses:
+
+```text
+BMW_ANALYST_READONLY
+```
+
+for analytics access.
+
+The application does not require write access to the BMW analytics tables.
+
+---
+
 ## Configuration
 
 Create a `.env` file in the project root.
-
-Required configuration:
 
 ```env
 SNOWFLAKE_ACCOUNT=
@@ -152,9 +207,17 @@ APP_NAME=BMW Natural Language Data Analyst
 LOG_LEVEL=INFO
 ```
 
-Never commit `.env` or Snowflake credentials to Git.
+Never commit `.env` or credentials to Git.
+
+---
 
 ## Installation
+
+From the project root:
+
+```powershell
+cd C:\bmw-natural-language-analyst
+```
 
 Activate the virtual environment:
 
@@ -168,6 +231,14 @@ Install the project:
 python -m pip install -e .
 ```
 
+For development and testing:
+
+```powershell
+python -m pip install -e ".[dev]"
+```
+
+---
+
 ## Run FastAPI
 
 From the project root:
@@ -176,31 +247,63 @@ From the project root:
 python -m uvicorn bmw_analyst.api.main:app --host 127.0.0.1 --port 8000
 ```
 
-API health check:
+The API runs at:
+
+```text
+http://127.0.0.1:8000
+```
+
+### Health Check
+
+```text
+GET /health
+```
+
+Example:
 
 ```text
 http://127.0.0.1:8000/health
 ```
 
+---
+
 ## Run Streamlit
 
-Open another terminal:
+Open another PowerShell terminal.
 
 ```powershell
 cd C:\bmw-natural-language-analyst
+```
+
+Activate the environment:
+
+```powershell
 .\bmwvenv\Scripts\Activate.ps1
+```
+
+Start Streamlit:
+
+```powershell
 python -m streamlit run ui\streamlit_app.py
 ```
 
-Streamlit normally runs on:
+The Streamlit application normally runs at:
 
 ```text
 http://localhost:8501
 ```
 
+---
+
 ## API Example
 
-Request:
+### Request
+
+```http
+POST /ask
+```
+
+Request body:
 
 ```json
 {
@@ -208,17 +311,21 @@ Request:
 }
 ```
 
-The API returns:
+### Response
 
 ```json
 {
   "question": "Which BMW model had the highest warranty cost in Chennai?",
   "intent": "warranty_cost",
-  "sql": "...",
+  "sql": "SELECT ...",
   "data": [],
   "answer": "..."
 }
 ```
+
+The exact result depends on the data available in Snowflake.
+
+---
 
 ## Example Questions
 
@@ -229,10 +336,12 @@ Which city had the highest vehicle sales?
 
 What is the most common fault type?
 
-Which BMW models have battery percentage below 30?
+Which BMW models have battery percentage below 30%?
 
 Compare warranty costs between BMW X5 and BMW iX.
 ```
+
+---
 
 ## Testing
 
@@ -242,7 +351,7 @@ Run the complete test suite:
 python -m pytest -q
 ```
 
-The project includes tests for:
+The test suite covers:
 
 * Snowflake connectivity
 * MCP tools
@@ -253,15 +362,25 @@ The project includes tests for:
 * Agent behavior
 * API behavior
 
+For tests that do not require live Snowflake connectivity:
+
+```powershell
+python -m pytest -q -m "not integration"
+```
+
+Snowflake integration tests require valid Snowflake credentials.
+
+---
+
 ## Logging
 
-Application logs are stored at:
+Application logs are stored in:
 
 ```text
 logs\bmw_analyst.log
 ```
 
-Logs capture:
+The application records events such as:
 
 * API requests
 * Intent detection
@@ -273,13 +392,15 @@ Logs capture:
 * Narrative generation
 * Errors
 
-Sensitive credentials should never be written to logs.
+Sensitive credentials must never be written to application logs.
+
+---
 
 ## Terraform
 
 Terraform is the infrastructure provisioning mechanism for the project.
 
-Terraform manages the Snowflake infrastructure including:
+Terraform manages the Snowflake infrastructure, including:
 
 * Database
 * Schema
@@ -289,108 +410,199 @@ Terraform manages the Snowflake infrastructure including:
 * Grants
 * Security configuration
 
-Validate infrastructure:
+Terraform directory:
+
+```text
+terraform/
+└── snowflake/
+    ├── database.tf
+    ├── schema.tf
+    ├── tables.tf
+    ├── warehouse.tf
+    ├── security.tf
+    ├── provider.tf
+    └── variables.tf
+```
+
+Validate the infrastructure:
 
 ```powershell
 terraform plan
 ```
 
-Expected result when infrastructure is synchronized:
+When the infrastructure is synchronized, Terraform should report:
 
 ```text
 No changes. Your infrastructure matches the configuration.
 ```
+
+---
 
 ## Project Structure
 
 ```text
 bmw-natural-language-analyst/
 │
-├── .env
-├── .gitignore
-├── README.md
-├── pyproject.toml
-├── requirements.txt
-├── run.py
-│
 ├── config/
-│   ├── __init__.py
-│   └── settings.py
-│
-├── data/
-│   └── sample/
+│   ├── settings.py
+│   └── __init__.py
 │
 ├── src/
 │   └── bmw_analyst/
 │       ├── agent/
+│       │   ├── agent.py
+│       │   ├── router.py
+│       │   ├── sql_generator.py
+│       │   └── prompts.py
+│       │
 │       ├── api/
+│       │   └── main.py
+│       │
 │       ├── mcp_client/
+│       │   ├── client.py
+│       │   └── models.py
+│       │
 │       ├── mcp_server/
-│       ├── models/
+│       │   ├── server.py
+│       │   ├── tools.py
+│       │   └── schemas.py
+│       │
+│       ├── snowflake/
+│       │   ├── connection.py
+│       │   ├── executor.py
+│       │   └── queries.py
+│       │
 │       ├── security/
-│       └── snowflake/
+│       │   ├── sql_validator.py
+│       │   ├── permissions.py
+│       │   └── logging_config.py
+│       │
+│       └── models/
+│           └── schemas.py
+│
+├── tests/
+│   ├── test_api.py
+│   ├── test_agent.py
+│   ├── test_mcp_client.py
+│   ├── test_mcp_tools.py
+│   ├── test_router.py
+│   ├── test_sql_validator.py
+│   ├── test_query_limits.py
+│   └── test_snowflake.py
 │
 ├── ui/
 │   └── streamlit_app.py
 │
-├── tests/
+├── terraform/
+│   └── snowflake/
 │
-└── logs/
-    └── .gitkeep
+├── data/
+│   └── sample/
+│
+├── logs/
+│
+├── .github/
+│   └── workflows/
+│
+├── .env
+├── .gitignore
+├── pyproject.toml
+├── requirements.txt
+├── run.py
+└── README.md
 ```
+
+---
 
 ## End-to-End Flow
 
-Example:
+Example question:
 
 ```text
-User:
-"Which BMW model had the highest warranty cost in Chennai?"
-
-        ↓
-
-Intent Router:
-warranty_cost
-
-        ↓
-
-LLM:
-Generates SELECT query
-
-        ↓
-
-SQL Validator:
-Validates query
-
-        ↓
-
-MCP:
-execute_approved_query()
-
-        ↓
-
-Snowflake:
-BMW_ANALYTICS.BMW_DATA.BMW_WARRANTY
-
-        ↓
-
-Result:
-BMW iX
-
-        ↓
-
-Amazon Bedrock:
-Generates narrative explanation
-
-        ↓
-
-Streamlit:
-Displays answer, SQL and query result
+Which BMW model had the highest warranty cost in Chennai?
 ```
+
+The request flows through the application as follows:
+
+```text
+User
+  ↓
+Streamlit
+  ↓
+FastAPI
+  ↓
+BMW Analyst Agent
+  ↓
+Intent Router
+  ↓
+warranty_cost
+  ↓
+Amazon Bedrock
+  ↓
+SQL Generation
+  ↓
+SQL Security Validator
+  ↓
+MCP Client
+  ↓
+MCP Server
+  ↓
+execute_approved_query()
+  ↓
+Snowflake
+  ↓
+Query Result
+  ↓
+Amazon Bedrock
+  ↓
+Narrative Explanation
+  ↓
+Streamlit
+```
+
+The Streamlit interface displays:
+
+```text
+Analysis
+Generated SQL
+Query Result
+```
+
+---
+
+## CI/CD
+
+GitHub Actions is used for automated testing.
+
+Workflow location:
+
+```text
+.github/
+└── workflows/
+    └── ci.yml
+```
+
+The CI pipeline installs the project development dependencies and runs the automated test suite.
+
+```text
+Git Push / Pull Request
+        ↓
+GitHub Actions
+        ↓
+Python Setup
+        ↓
+Install Dependencies
+        ↓
+Run Tests
+        ↓
+PASS / FAIL
+```
+
+---
 
 ## Current Status
 
-Core application components are implemented and tested:
+### Implemented
 
 * Project structure
 * Snowflake connectivity
@@ -401,10 +613,61 @@ Core application components are implemented and tested:
 * Intent routing
 * SQL generation
 * Query limits
-* API
+* FastAPI API
 * Streamlit integration
 * Audit logging
 * Automated tests
+* GitHub Actions CI
+
+### Security Controls
+
+```text
+SELECT-only SQL
+Single statement
+Approved database
+Approved schema
+Approved tables
+Approved columns
+Read-only Snowflake role
+1000-row limit
+30-second timeout
+1000-character question limit
+Audit logging
+```
+
+---
+
+## Troubleshooting
+
+### MCP connection error
+
+If you see:
+
+```text
+ModuleNotFoundError
+```
+
+or:
+
+```text
+McpError: Connection closed
+```
+
+activate the project virtual environment:
+
+```powershell
+.\bmwvenv\Scripts\Activate.ps1
+```
+
+Then run:
+
+```powershell
+python -m pytest tests\test_mcp_client.py -q
+```
+
+The MCP server is started automatically by the MCP client.
+
+---
 
 ## License
 

@@ -1,8 +1,13 @@
 import re
+import time
 from typing import Any
+
+from snowflake.connector.errors import InterfaceError, OperationalError
 
 from config.settings import (
     MAX_QUERY_ROWS,
+    QUERY_RETRY_ATTEMPTS,
+    QUERY_RETRY_BACKOFF_SECONDS,
     QUERY_TIMEOUT_SECONDS,
 )
 
@@ -27,6 +32,29 @@ def apply_query_limit(sql: str) -> str:
 def execute_query(
     sql: str,
     params: tuple[Any, ...] | None = None,
+) -> list[dict[str, Any]]:
+    for attempt in range(1, QUERY_RETRY_ATTEMPTS + 1):
+        try:
+            return _execute_query_once(sql, params)
+        except (InterfaceError, OperationalError, TimeoutError, ConnectionError) as exc:
+            if attempt == QUERY_RETRY_ATTEMPTS:
+                logger.exception("Snowflake query failed after retries")
+                raise
+
+            delay = QUERY_RETRY_BACKOFF_SECONDS * (2 ** (attempt - 1))
+            logger.warning(
+                "Transient Snowflake failure; retrying attempt=%s next_attempt=%s delay=%s error=%s",
+                attempt,
+                attempt + 1,
+                delay,
+                str(exc),
+            )
+            time.sleep(delay)
+
+
+def _execute_query_once(
+    sql: str,
+    params: tuple[Any, ...] | None,
 ) -> list[dict[str, Any]]:
     logger.info("Snowflake query execution started")
 

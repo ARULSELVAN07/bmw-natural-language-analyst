@@ -46,6 +46,8 @@ SQL RULES:
 - Use only the four approved tables.
 - Use only columns that exist in the approved table definitions.
 - Generate exactly one SQL statement.
+- For multi-part questions, combine the requested parts into one read-only
+   query when possible and preserve every part of the user's request.
 - Do not generate multiple statements.
 - Do not use markdown code fences.
 - Return only valid SQL.

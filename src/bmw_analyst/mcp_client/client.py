@@ -1,3 +1,4 @@
+import sys
 from typing import Any
 
 from mcp.client.session import ClientSession
@@ -10,10 +11,10 @@ class MCPClient:
 
     def __init__(
         self,
-        server_command: str = "python",
+        server_command: str | None = None,
         server_args: list[str] | None = None,
     ):
-        self.server_command = server_command
+        self.server_command = server_command or sys.executable
         self.server_args = server_args or [
             "-m",
             "bmw_analyst.mcp_server.server",

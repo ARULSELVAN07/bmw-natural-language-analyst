@@ -1,4 +1,4 @@
-from mcp.server.mcpserver import MCPServer
+from mcp.server.fastmcp import FastMCP
 
 from config.settings import MCP_SERVER_NAME
 
@@ -14,7 +14,7 @@ from .tools import (
 )
 
 
-mcp = MCPServer(MCP_SERVER_NAME)
+mcp = FastMCP(MCP_SERVER_NAME)
 
 
 @mcp.tool()

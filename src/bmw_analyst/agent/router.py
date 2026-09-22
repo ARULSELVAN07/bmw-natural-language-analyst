@@ -100,8 +100,9 @@ class IntentRouter:
             ]
         )
 
-        # Multiple domains + comparison = custom analytical query
-        if comparison_match and matched_domains > 1:
+        # Multi-domain and comparison questions need the general SQL path so
+        # the generator can preserve every requested part.
+        if matched_domains > 1:
             return AnalystIntent.CUSTOM_QUERY
 
         if battery_match:
