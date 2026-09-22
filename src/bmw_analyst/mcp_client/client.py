@@ -1,3 +1,5 @@
+import json
+import os
 import sys
 from typing import Any
 
@@ -15,6 +17,7 @@ class MCPClient:
         server_args: list[str] | None = None,
     ):
         self.server_command = server_command or sys.executable
+
         self.server_args = server_args or [
             "-m",
             "bmw_analyst.mcp_server.server",
@@ -28,9 +31,23 @@ class MCPClient:
 
         arguments = arguments or {}
 
+        # -------------------------------------------------
+        # Preserve the complete parent environment.
+        #
+        # This is important for:
+        # - GitHub Actions
+        # - Docker
+        # - Local .env based execution
+        # - AWS configuration
+        # - Snowflake configuration
+        # -------------------------------------------------
+
+        server_env = os.environ.copy()
+
         server_params = StdioServerParameters(
             command=self.server_command,
             args=self.server_args,
+            env=server_env,
         )
 
         async with stdio_client(server_params) as streams:
@@ -51,32 +68,32 @@ class MCPClient:
 
                 for content in result.content:
 
-                    if hasattr(content, "text"):
+                    if not hasattr(content, "text"):
+                        continue
 
-                        import json
+                    try:
+                        parsed = json.loads(content.text)
 
-                        try:
-                            parsed = json.loads(content.text)
+                    except json.JSONDecodeError:
+                        continue
 
-                            if isinstance(parsed, dict):
+                    if not isinstance(parsed, dict):
+                        continue
 
-                                if parsed.get("success") is False:
-                                    return MCPResponse(
-                                        success=False,
-                                        tool=tool_name,
-                                        error=parsed.get(
-                                            "error",
-                                            "MCP tool execution failed.",
-                                        ),
-                                    )
+                    if parsed.get("success") is False:
+                        return MCPResponse(
+                            success=False,
+                            tool=tool_name,
+                            error=parsed.get(
+                                "error",
+                                "MCP tool execution failed.",
+                            ),
+                        )
 
-                                data = parsed.get(
-                                    "data",
-                                    [],
-                                )
+                    tool_data = parsed.get("data", [])
 
-                        except json.JSONDecodeError:
-                            pass
+                    if isinstance(tool_data, list):
+                        data = tool_data
 
                 return MCPResponse(
                     success=True,
