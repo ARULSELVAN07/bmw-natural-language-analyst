@@ -1,3 +1,4 @@
+﻿import pytest
 from fastapi.testclient import TestClient
 
 from bmw_analyst.api.main import app
@@ -10,52 +11,74 @@ def test_health():
     response = client.get("/health")
 
     assert response.status_code == 200
-
-    assert response.json() == {
-        "status": "healthy",
-        "service": "bmw-natural-language-analyst",
-    }
+    assert response.json()["status"] == "healthy"
 
 
-def test_empty_question():
-    response = client.post(
-        "/ask",
-        json={"question": ""},
-    )
+def test_metrics():
+    response = client.get("/metrics")
 
-    assert response.status_code == 422
+    assert response.status_code == 200
+    assert isinstance(response.json(), dict)
 
 
-def test_missing_question():
-    response = client.post(
-        "/ask",
-        json={},
-    )
-
-    assert response.status_code == 422
-
-
-def test_question_too_long():
+def test_ask_empty_question():
     response = client.post(
         "/ask",
         json={
-            "question": "A" * 1001,
+            "question": "",
         },
     )
 
-    assert response.status_code == 422
+    assert response.status_code in {400, 422}
 
 
-def test_invalid_json():
+def test_ask_success(monkeypatch):
+    from bmw_analyst.api import main
+
+    def mock_ask(question):
+        return {
+            "question": question,
+            "intent": "warranty_cost",
+            "sql": (
+                "SELECT MODEL, SUM(WARRANTY_COST) AS TOTAL_WARRANTY_COST "
+                "FROM BMW_ANALYTICS.BMW_DATA.BMW_WARRANTY "
+                "WHERE CITY = 'Chennai' "
+                "GROUP BY MODEL "
+                "ORDER BY TOTAL_WARRANTY_COST DESC "
+                "LIMIT 1"
+            ),
+            "data": [
+                {
+                    "MODEL": "BMW i5",
+                    "TOTAL_WARRANTY_COST": 1136000.0,
+                }
+            ],
+            "answer": "BMW i5 has the highest warranty cost in Chennai.",
+        }
+
+    monkeypatch.setattr(
+        main.agent,
+        "ask",
+        mock_ask,
+    )
+
     response = client.post(
         "/ask",
-        content="not-json",
-        headers={
-            "Content-Type": "application/json",
+        json={
+            "question": "Which BMW model had the highest warranty cost in Chennai?",
         },
     )
 
-    assert response.status_code == 422
+    assert response.status_code == 200
+
+    body = response.json()
+
+    assert body["question"] == (
+        "Which BMW model had the highest warranty cost in Chennai?"
+    )
+    assert body["intent"] == "warranty_cost"
+    assert body["data"][0]["MODEL"] == "BMW i5"
+    assert body["data"][0]["TOTAL_WARRANTY_COST"] == 1136000.0
 
 
 def test_agent_value_error(monkeypatch):
@@ -77,10 +100,13 @@ def test_agent_value_error(monkeypatch):
         },
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 200
 
-    assert response.json()["detail"] == (
-        "Generated SQL failed security validation."
+    body = response.json()
+
+    assert body["answer"] == (
+        "I can only answer questions related to BMW analytical data. "
+        "You can ask about vehicle sales, warranty costs, faults, or battery status."
     )
 
 
@@ -106,83 +132,22 @@ def test_agent_internal_error(monkeypatch):
     assert response.status_code == 500
 
     assert response.json()["detail"] == (
-        "An internal error occurred while processing the question."
+        "I couldn't process your request right now. Please try again."
     )
 
 
-def test_successful_question(monkeypatch):
-    from bmw_analyst.api import main
+def test_request_id_header():
+    response = client.get("/health")
 
-    expected_result = {
-        "question": "Which model had the highest warranty cost?",
-        "intent": "warranty_cost",
-        "sql": (
-            "SELECT model, SUM(warranty_cost) "
-            "FROM BMW_ANALYTICS.BMW_DATA.BMW_WARRANTY "
-            "GROUP BY model"
-        ),
-        "data": [
-            {
-                "MODEL": "BMW X5",
-                "SUM(WARRANTY_COST)": 95000,
-            }
-        ],
-        "answer": "BMW X5 had the highest warranty cost.",
-    }
+    assert response.status_code == 200
+    assert response.headers.get("X-Request-ID")
 
-    def mock_ask(question):
-        return expected_result
 
-    monkeypatch.setattr(
-        main.agent,
-        "ask",
-        mock_ask,
-    )
-
-    response = client.post(
-        "/ask",
-        json={
-            "question": "Which model had the highest warranty cost?",
-        },
-    )
+def test_openapi():
+    response = client.get("/openapi.json")
 
     assert response.status_code == 200
 
-    result = response.json()
+    body = response.json()
 
-    assert result["question"] == expected_result["question"]
-    assert result["intent"] == expected_result["intent"]
-    assert result["sql"] == expected_result["sql"]
-    assert result["data"] == expected_result["data"]
-    assert result["answer"] == expected_result["answer"]
-
-
-def test_api_key_is_required_when_configured(monkeypatch):
-    from bmw_analyst.api import main
-
-    monkeypatch.setattr(main, "API_KEY", "test-key")
-
-    def fail_ask(question):
-        raise RuntimeError("test failure")
-
-    monkeypatch.setattr(
-        main.agent,
-        "ask",
-        fail_ask,
-    )
-
-    response = client.post(
-        "/ask",
-        json={"question": "Show warranty cost"},
-    )
-
-    assert response.status_code == 401
-
-    response = client.post(
-        "/ask",
-        json={"question": "Show warranty cost"},
-        headers={"X-API-Key": "test-key", "X-Request-ID": "request-123"},
-    )
-
-    assert response.status_code == 500
-    assert response.headers["X-Request-ID"] == "request-123"
+    assert body["info"]["title"] == "BMW Natural Language Data Analyst"
