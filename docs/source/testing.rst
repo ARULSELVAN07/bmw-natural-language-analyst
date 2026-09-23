@@ -1,125 +1,71 @@
 Testing
 =======
 
-Overview
---------
+The BMW Natural Language Analyst uses pytest for automated testing.
 
-The project uses Pytest for automated testing.
+Run Tests
+---------
 
-Run the Test Suite
-------------------
+Run all non-integration tests:
 
-From the project root::
+::
+
+    python -m pytest -q -m "not integration"
+
+Run All Tests
+-------------
+
+::
 
     python -m pytest -q
 
-Test Files
-----------
+Test Categories
+---------------
 
 API Tests
 ~~~~~~~~~
 
-::
-
-    tests/test_api.py
-
-Tests FastAPI application behavior.
+Tests FastAPI endpoints and API behavior.
 
 Agent Tests
 ~~~~~~~~~~~
 
-::
+Tests the BMW analyst agent.
 
-    tests/test_agent.py
+MCP Tests
+~~~~~~~~~
 
-Tests natural-language analysis behavior.
-
-MCP Client Tests
-~~~~~~~~~~~~~~~~
-
-::
-
-    tests/test_mcp_client.py
-
-Tests MCP client behavior.
-
-MCP Tool Tests
-~~~~~~~~~~~~~~
-
-::
-
-    tests/test_mcp_tools.py
-
-Tests MCP tool functionality.
+Tests MCP client and server behavior.
 
 Router Tests
 ~~~~~~~~~~~~
 
-::
-
-    tests/test_router.py
-
-Tests analytical intent routing.
+Tests natural-language intent routing.
 
 SQL Validator Tests
 ~~~~~~~~~~~~~~~~~~~
 
-::
-
-    tests/test_sql_validator.py
-
-Tests SQL safety rules.
+Tests read-only SQL security rules.
 
 Query Limit Tests
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
-::
-
-    tests/test_query_limits.py
-
-Tests query-result limits.
+Tests maximum query result limits.
 
 Snowflake Tests
 ~~~~~~~~~~~~~~~
 
+Tests Snowflake connectivity and execution.
+
+Current Result
+--------------
+
+The non-integration test suite currently passes:
+
 ::
 
-    tests/test_snowflake.py
+    60 passed
+    2 deselected
 
-Tests Snowflake-related functionality.
-
-Security Testing
-----------------
-
-Security tests verify that destructive SQL statements are rejected.
-
-Examples include:
-
-* INSERT
-* UPDATE
-* DELETE
-* DROP
-* ALTER
-* TRUNCATE
-
-Continuous Integration
-----------------------
-
-The project contains a GitHub Actions workflow for automated testing.
-
-The CI workflow:
-
-#. Checks out the repository.
-#. Installs Python 3.12.
-#. Installs project dependencies.
-#. Installs development dependencies.
-#. Runs Pytest.
-
-CI Security
------------
-
-Normal unit and security tests should not require production Snowflake
-credentials.
-
-Live database integration tests should be isolated when external
-infrastructure is required.
+The Starlette/AnyIO deprecation warning does not represent a test
+failure.

@@ -1,10 +1,8 @@
 Snowflake
 =========
 
-Overview
---------
-
-Snowflake is used as the analytical data warehouse for BMW data.
+Snowflake is the analytical data platform used by the BMW Natural
+Language Analyst.
 
 Database
 --------
@@ -27,73 +25,81 @@ Warehouse
 
     BMW_WH
 
-Read-Only Role
---------------
+Tables
+------
 
-The configured analytical role is::
+BMW Vehicle Sales
+~~~~~~~~~~~~~~~~~
 
-    BMW_ANALYST_READONLY
+::
 
-Approved Tables
----------------
+    BMW_VEHICLE_SALES
 
-The application restricts analytical queries to:
+BMW Warranty
+~~~~~~~~~~~~
 
-* ``BMW_VEHICLE_SALES``
-* ``BMW_WARRANTY``
-* ``BMW_FAULTS``
-* ``BMW_BATTERY``
+::
 
-Connection Module
------------------
+    BMW_WARRANTY
 
-The Snowflake connection implementation is located at::
+BMW Faults
+~~~~~~~~~~
 
-    src/bmw_analyst/snowflake/connection.py
+::
 
-Query Executor
---------------
+    BMW_FAULTS
 
-The query executor is located at::
+BMW Battery
+~~~~~~~~~~~
 
-    src/bmw_analyst/snowflake/executor.py
+::
+
+    BMW_BATTERY
+
+Connection
+----------
+
+The application reads Snowflake configuration from environment
+variables.
+
+The Snowflake connection uses:
+
+* account
+* user
+* password
+* authenticator
+* role
+* warehouse
+* database
+* schema
+
+Connection Reuse
+----------------
+
+The application maintains a reusable Snowflake connection to reduce
+connection startup overhead.
 
 Query Execution
 ---------------
 
-The executor performs the following operations:
+Queries are executed through the Snowflake executor after SQL security
+validation.
 
-#. Open a Snowflake connection.
-#. Execute validated SQL.
-#. Apply the configured row limit.
-#. Apply the configured query timeout.
-#. Fetch the result.
-#. Close the cursor.
-#. Close the connection.
-#. Record execution status.
-
-Row Limit
----------
-
-The maximum configured result size is:
+Example
+-------
 
 ::
 
-    1000 rows
+    SELECT
+        MODEL,
+        SUM(WARRANTY_COST) AS TOTAL_WARRANTY_COST
+    FROM BMW_ANALYTICS.BMW_DATA.BMW_WARRANTY
+    WHERE CITY = 'Chennai'
+    GROUP BY MODEL
+    ORDER BY TOTAL_WARRANTY_COST DESC
+    LIMIT 1
 
-Query Timeout
--------------
+Expected result::
 
-The configured query timeout is:
-
-::
-
-    30 seconds
-
-Read-Only Design
-----------------
-
-The application is designed for analytical read operations.
-
-Database permissions and application-level SQL validation work together
-to prevent data modification operations.
+    BMW i5
+    1136000.0

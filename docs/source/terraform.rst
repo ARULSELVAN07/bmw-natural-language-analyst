@@ -1,55 +1,31 @@
 Terraform
 =========
 
-Overview
---------
+The project contains Terraform configuration under:
 
-Terraform configuration is maintained for infrastructure-as-code resources.
-
-Terraform Directory
--------------------
-
-The project Terraform configuration is located under::
-
-    terraform/
-
-Snowflake Terraform
--------------------
-
-Snowflake-related Terraform configuration is located under::
+::
 
     terraform/snowflake/
 
-Terraform Workflow
-------------------
+Purpose
+-------
 
-Initialize Terraform::
+Terraform can be used to define and manage infrastructure required by
+the BMW analytics platform.
 
-    terraform init
+Infrastructure
+--------------
 
-Validate the configuration::
+The Terraform configuration is intended to support infrastructure
+deployment in a repeatable and version-controlled way.
 
-    terraform validate
+State
+-----
 
-Create an execution plan::
+Terraform state files must not be committed to Git.
 
-    terraform plan
+Sensitive Values
+----------------
 
-Apply infrastructure changes::
-
-    terraform apply
-
-Infrastructure Safety
----------------------
-
-Always review the Terraform plan before applying infrastructure changes.
-
-Terraform state may contain sensitive infrastructure information and should
-not be committed to source control when it contains sensitive data.
-
-Credentials
------------
-
-Do not hard-code Snowflake, AWS, or other credentials in Terraform files.
-
-Use appropriate environment variables or secure credential mechanisms.
+Credentials and sensitive infrastructure values must be stored
+securely and must not be committed to the repository.

@@ -1,101 +1,88 @@
 MCP
 ===
 
-Overview
---------
+The BMW Natural Language Analyst uses the Model Context Protocol (MCP)
+to expose BMW analytics tools.
 
-The Model Context Protocol (MCP) provides the controlled tool interface
-between the BMW analyst agent and the data-access layer.
+MCP Architecture
+-----------------
 
-The MCP architecture separates natural-language reasoning from database
-execution.
+::
 
-MCP Server
-----------
+    BMW Analyst Agent
+           |
+           v
+       MCP Client
+           |
+           v
+       MCP Server
+           |
+           v
+        Snowflake
 
-The MCP server implementation is located at::
-
-    src/bmw_analyst/mcp_server/server.py
-
-Available Tools
----------------
+MCP Tools
+---------
 
 Vehicle Sales
 ~~~~~~~~~~~~~
 
-``get_vehicle_sales``
+::
 
-Provides access to BMW vehicle sales analysis.
+    vehicle_sales
+
+Provides BMW vehicle sales information.
 
 Warranty Cost
 ~~~~~~~~~~~~~
 
-``get_warranty_cost``
+::
 
-Provides access to BMW warranty-cost analysis.
+    warranty_cost
+
+Provides BMW warranty information and warranty costs.
 
 Fault Summary
 ~~~~~~~~~~~~~
 
-``get_fault_summary``
+::
 
-Provides access to BMW fault analysis.
+    fault_summary
+
+Provides BMW fault information.
 
 Battery Status
 ~~~~~~~~~~~~~~
 
-``get_battery_status``
+::
 
-Provides access to BMW battery analysis.
+    battery_status
 
-Approved Query Execution
-~~~~~~~~~~~~~~~~~~~~~~~~
+Provides BMW battery information.
 
-``execute_approved_query``
-
-Executes SQL only after the application's SQL validation rules have
-approved the query.
-
-MCP Client
-----------
-
-The MCP client implementation is located at::
-
-    src/bmw_analyst/mcp_client/client.py
-
-The client starts the MCP server and invokes the required tool.
-
-Execution Flow
---------------
+Approved Query
+~~~~~~~~~~~~~~
 
 ::
 
-    User Question
-         |
-         v
-    Intent Detection
-         |
-         v
-    SQL Generation
-         |
-         v
-    SQL Validation
-         |
-         v
-    MCP Client
-         |
-         v
-    MCP Server
-         |
-         v
-    Snowflake
+    execute_approved_query
+
+Executes a validated read-only SQL query.
 
 Security
 --------
 
-MCP does not provide unrestricted database access.
+The MCP server validates SQL before allowing execution.
 
-SQL must pass the application's validation layer before execution.
+Only approved read-only operations are permitted.
 
-The MCP layer therefore acts as a controlled interface between the
-application and approved analytical operations.
+MCP Server
+----------
+
+The MCP server can be started using:
+
+::
+
+    python -m bmw_analyst.mcp_server.server
+
+The application normally starts and manages the MCP process through
+the MCP client.

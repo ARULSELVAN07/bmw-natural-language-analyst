@@ -1,53 +1,15 @@
 Configuration
 =============
 
-Overview
---------
-
-The application uses environment variables for runtime configuration.
+Environment configuration is stored in the project's ``.env`` file.
 
 Snowflake Configuration
 -----------------------
 
-Required Snowflake settings include::
-
-    SNOWFLAKE_ACCOUNT
-    SNOWFLAKE_USER
-    SNOWFLAKE_PASSWORD
-    SNOWFLAKE_AUTHENTICATOR
-    SNOWFLAKE_ROLE
-    SNOWFLAKE_WAREHOUSE
-    SNOWFLAKE_DATABASE
-    SNOWFLAKE_SCHEMA
-
-AWS Configuration
------------------
-
-AWS and Amazon Bedrock settings include::
-
-    AWS_REGION
-    BEDROCK_MODEL_ID
-
-Application Configuration
--------------------------
-
-Application settings include::
-
-    API_HOST
-    API_PORT
-    STREAMLIT_HOST
-    STREAMLIT_PORT
-    MCP_SERVER_NAME
-    APP_NAME
-    LOG_LEVEL
-
-Example Configuration
----------------------
-
-Use placeholders in documentation rather than real credentials::
+::
 
     SNOWFLAKE_ACCOUNT=<account>
-    SNOWFLAKE_USER=<username>
+    SNOWFLAKE_USER=<user>
     SNOWFLAKE_PASSWORD=<password>
     SNOWFLAKE_AUTHENTICATOR=snowflake
     SNOWFLAKE_ROLE=BMW_ANALYST_READONLY
@@ -55,8 +17,23 @@ Use placeholders in documentation rather than real credentials::
     SNOWFLAKE_DATABASE=BMW_ANALYTICS
     SNOWFLAKE_SCHEMA=BMW_DATA
 
-    AWS_REGION=ap-south-1
-    BEDROCK_MODEL_ID=<bedrock-model-id>
+Ollama Configuration
+--------------------
+
+The BMW Natural Language Analyst uses Ollama for local LLM inference.
+
+::
+
+    OLLAMA_BASE_URL=http://127.0.0.1:11434
+    OLLAMA_MODEL=llama3.2:1b
+
+The model is running locally through Ollama and does not require
+AWS Bedrock for LLM inference.
+
+Application Configuration
+-------------------------
+
+::
 
     API_HOST=127.0.0.1
     API_PORT=8000
@@ -68,35 +45,18 @@ Use placeholders in documentation rather than real credentials::
     APP_NAME=BMW Natural Language Data Analyst
     LOG_LEVEL=INFO
 
-Approved Tables
----------------
+AWS
+---
 
-The application uses the following approved analytical tables:
+::
 
-* ``BMW_VEHICLE_SALES``
-* ``BMW_WARRANTY``
-* ``BMW_FAULTS``
-* ``BMW_BATTERY``
+    AWS_REGION=ap-south-1
 
-Operational Limits
-------------------
+AWS configuration is available for optional AWS integrations.
 
-Maximum query rows::
+Secrets
+-------
 
-    1000
+Sensitive credentials should not be committed to Git.
 
-Query timeout::
-
-    30 seconds
-
-Maximum question length::
-
-    1000 characters
-
-Environment Security
---------------------
-
-The ``.env`` file contains sensitive configuration and must not be committed
-to Git.
-
-Use ``.gitignore`` to exclude environment files from source control.
+The ``.env`` file should remain excluded through ``.gitignore``.

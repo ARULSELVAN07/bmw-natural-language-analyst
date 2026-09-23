@@ -1,50 +1,83 @@
 import re
-import boto3
+import logging
+
+import ollama
 
 from config.settings import (
-    AWS_REGION,
-    BEDROCK_MODEL_ID,
+    OLLAMA_BASE_URL,
+    OLLAMA_MODEL,
 )
 
 from .prompts import SYSTEM_PROMPT
 
 
-class SQLGenerator:
+logger = logging.getLogger(__name__)
 
-    def __init__(self):
-        self.client = boto3.client(
-            "bedrock-runtime",
-            region_name=AWS_REGION,
+
+class SQLGenerator:
+    """
+    Generates read-only SQL using the local
+    Ollama Qwen model.
+    """
+
+    def __init__(
+        self,
+        model: str = OLLAMA_MODEL,
+        base_url: str = OLLAMA_BASE_URL,
+    ):
+        self.model = model
+
+        self.client = ollama.Client(
+            host=base_url
+        )
+
+        logger.info(
+            "SQLGenerator initialized model=%s",
+            self.model,
         )
 
     def generate(self, question: str) -> str:
+        """
+        Generate SQL from a natural-language question.
 
-        response = self.client.converse(
-            modelId=BEDROCK_MODEL_ID,
-            system=[
-                {
-                    "text": SYSTEM_PROMPT
-                }
-            ],
+        The generated SQL is NOT executed here.
+        It must pass the SQL security validator
+        before reaching Snowflake.
+        """
+
+        if not question or not question.strip():
+            raise ValueError(
+                "Question cannot be empty."
+            )
+
+        logger.info(
+            "Generating SQL with Ollama model=%s",
+            self.model,
+        )
+
+        response = self.client.chat(
+            model=self.model,
             messages=[
                 {
+                    "role": "system",
+                    "content": SYSTEM_PROMPT,
+                },
+                {
                     "role": "user",
-                    "content": [
-                        {
-                            "text": question
-                        }
-                    ],
-                }
+                    "content": question.strip(),
+                },
             ],
-            inferenceConfig={
+            options={
                 "temperature": 0,
-                "maxTokens": 1000,
             },
         )
 
-        sql = response["output"]["message"]["content"][0]["text"].strip()
+        sql = response["message"]["content"].strip()
 
-        # Remove markdown fences
+        # -------------------------------------------------
+        # Remove Markdown SQL fences
+        # -------------------------------------------------
+
         sql = re.sub(
             r"^```(?:sql)?\s*",
             "",
@@ -58,7 +91,10 @@ class SQLGenerator:
             sql,
         )
 
-        # Fix missing spaces after SQL keywords
+        # -------------------------------------------------
+        # Fix common missing spaces
+        # -------------------------------------------------
+
         sql = re.sub(
             r"\bFROM(?=\S)",
             "FROM ",
@@ -87,4 +123,10 @@ class SQLGenerator:
             flags=re.IGNORECASE,
         )
 
-        return sql.strip()
+        sql = sql.strip()
+
+        logger.info(
+            "SQL generated successfully"
+        )
+
+        return sql

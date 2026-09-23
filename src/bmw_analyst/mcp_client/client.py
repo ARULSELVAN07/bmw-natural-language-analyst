@@ -23,24 +23,19 @@ class MCPClient:
             "bmw_analyst.mcp_server.server",
         ]
 
-    async def call_tool(
-        self,
-        tool_name: str,
-        arguments: dict[str, Any] | None = None,
-    ) -> MCPResponse:
+        self._stdio_context = None
+        self._session_context = None
+        self._session: ClientSession | None = None
 
-        arguments = arguments or {}
+    async def _ensure_connected(self) -> ClientSession:
+        """
+        Start the MCP server and initialize the MCP session once.
 
-        # -------------------------------------------------
-        # Preserve the complete parent environment.
-        #
-        # This is important for:
-        # - GitHub Actions
-        # - Docker
-        # - Local .env based execution
-        # - AWS configuration
-        # - Snowflake configuration
-        # -------------------------------------------------
+        Subsequent tool calls reuse the same process and session.
+        """
+
+        if self._session is not None:
+            return self._session
 
         server_env = os.environ.copy()
 
@@ -50,56 +45,113 @@ class MCPClient:
             env=server_env,
         )
 
-        async with stdio_client(server_params) as streams:
+        self._stdio_context = stdio_client(server_params)
 
-            async with ClientSession(
-                streams[0],
-                streams[1],
-            ) as session:
+        streams = await self._stdio_context.__aenter__()
 
-                await session.initialize()
+        self._session_context = ClientSession(
+            streams[0],
+            streams[1],
+        )
 
-                result = await session.call_tool(
-                    tool_name,
-                    arguments,
+        self._session = await self._session_context.__aenter__()
+
+        await self._session.initialize()
+
+        return self._session
+
+    async def close(self):
+        """
+        Gracefully shut down the MCP session and server process.
+        """
+
+        if self._session_context is not None:
+            try:
+                await self._session_context.__aexit__(
+                    None,
+                    None,
+                    None,
+                )
+            finally:
+                self._session_context = None
+                self._session = None
+
+        if self._stdio_context is not None:
+            try:
+                await self._stdio_context.__aexit__(
+                    None,
+                    None,
+                    None,
+                )
+            finally:
+                self._stdio_context = None
+
+    async def call_tool(
+        self,
+        tool_name: str,
+        arguments: dict[str, Any] | None = None,
+    ) -> MCPResponse:
+
+        arguments = arguments or {}
+
+        session = await self._ensure_connected()
+
+        try:
+
+            result = await session.call_tool(
+                tool_name,
+                arguments,
+            )
+
+            data: list[dict[str, Any]] = []
+
+            for content in result.content:
+
+                if not hasattr(content, "text"):
+                    continue
+
+                try:
+                    parsed = json.loads(content.text)
+
+                except json.JSONDecodeError:
+                    continue
+
+                if not isinstance(parsed, dict):
+                    continue
+
+                if parsed.get("success") is False:
+
+                    return MCPResponse(
+                        success=False,
+                        tool=tool_name,
+                        error=parsed.get(
+                            "error",
+                            "MCP tool execution failed.",
+                        ),
+                    )
+
+                tool_data = parsed.get(
+                    "data",
+                    [],
                 )
 
-                data: list[dict[str, Any]] = []
+                if isinstance(tool_data, list):
+                    data = tool_data
 
-                for content in result.content:
+            return MCPResponse(
+                success=True,
+                tool=tool_name,
+                data=data,
+            )
 
-                    if not hasattr(content, "text"):
-                        continue
+        except Exception:
 
-                    try:
-                        parsed = json.loads(content.text)
+            # Reset the session so the next request
+            # can create a fresh MCP process/session.
 
-                    except json.JSONDecodeError:
-                        continue
+            await self.close()
 
-                    if not isinstance(parsed, dict):
-                        continue
-
-                    if parsed.get("success") is False:
-                        return MCPResponse(
-                            success=False,
-                            tool=tool_name,
-                            error=parsed.get(
-                                "error",
-                                "MCP tool execution failed.",
-                            ),
-                        )
-
-                    tool_data = parsed.get("data", [])
-
-                    if isinstance(tool_data, list):
-                        data = tool_data
-
-                return MCPResponse(
-                    success=True,
-                    tool=tool_name,
-                    data=data,
-                )
+            raise
 
     async def get_vehicle_sales(self) -> MCPResponse:
         return await self.call_tool(

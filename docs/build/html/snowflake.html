@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Snowflake &mdash; BMW Natural Language Data Analyst</title>
+  <title>Snowflake &mdash; BMW Natural Language Analyst  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -32,7 +32,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            BMW Natural Language Data Analyst
+            BMW Natural Language Analyst
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -44,135 +44,32 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#system-architecture">System Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#main-components">Main Components</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#agent">Agent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#intent-router">Intent Router</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#sql-generator">SQL Generator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#sql-validator">SQL Validator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#mcp-client">MCP Client</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#mcp-server">MCP Server</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#snowflake-executor">Snowflake Executor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#security-layer">Security Layer</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#end-to-end-flow">End-to-End Flow</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#project-directory">Project Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#virtual-environment">Virtual Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-dependencies">Install Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#environment-configuration">Environment Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#run-fastapi">Run FastAPI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#run-streamlit">Run Streamlit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#run-tests">Run Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#build-documentation">Build Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#snowflake-configuration">Snowflake Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#aws-configuration">AWS Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#application-configuration">Application Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#example-configuration">Example Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#approved-tables">Approved Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#operational-limits">Operational Limits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#environment-security">Environment Security</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#mcp-server">MCP Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#available-tools">Available Tools</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#vehicle-sales">Vehicle Sales</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#warranty-cost">Warranty Cost</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#fault-summary">Fault Summary</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#battery-status">Battery Status</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#approved-query-execution">Approved Query Execution</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#mcp-client">MCP Client</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#execution-flow">Execution Flow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#security">Security</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Snowflake</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#database">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#schema">Schema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#warehouse">Warehouse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#read-only-role">Read-Only Role</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#approved-tables">Approved Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#connection-module">Connection Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#query-executor">Query Executor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tables">Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bmw-vehicle-sales">BMW Vehicle Sales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmw-warranty">BMW Warranty</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmw-faults">BMW Faults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmw-battery">BMW Battery</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#connection">Connection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connection-reuse">Connection Reuse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#query-execution">Query Execution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#row-limit">Row Limit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#query-timeout">Query Timeout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#read-only-design">Read-Only Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="security.html#security-overview">Security Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#read-only-database-role">Read-Only Database Role</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#sql-validation">SQL Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#blocked-sql-commands">Blocked SQL Commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#approved-tables">Approved Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#query-limits">Query Limits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#query-timeout">Query Timeout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#question-length">Question Length</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#audit-logging">Audit Logging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#credential-protection">Credential Protection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#security-testing">Security Testing</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#api-implementation">API Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#ask-endpoint">Ask Endpoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#request">Request</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#response">Response</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#powershell-example">PowerShell Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#fastapi-documentation">FastAPI Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#api-workflow">API Workflow</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#run-the-test-suite">Run the Test Suite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#test-files">Test Files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#api-tests">API Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#agent-tests">Agent Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#mcp-client-tests">MCP Client Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#mcp-tool-tests">MCP Tool Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#router-tests">Router Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#sql-validator-tests">SQL Validator Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#query-limit-tests">Query Limit Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#snowflake-tests">Snowflake Tests</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#security-testing">Security Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#continuous-integration">Continuous Integration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#ci-security">CI Security</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="terraform.html">Terraform</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#terraform-directory">Terraform Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#snowflake-terraform">Snowflake Terraform</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#terraform-workflow">Terraform Workflow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#infrastructure-safety">Infrastructure Safety</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#credentials">Credentials</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project Structure</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="project_structure.html#important-directories">Important Directories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="project_structure.html#configuration-files">Configuration Files</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terraform.html">Terraform</a></li>
 </ul>
 
         </div>
@@ -181,7 +78,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">BMW Natural Language Data Analyst</a>
+          <a href="index.html">BMW Natural Language Analyst</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -201,10 +98,8 @@
              
   <section id="snowflake">
 <h1>Snowflake<a class="headerlink" href="#snowflake" title="Link to this heading"></a></h1>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>Snowflake is used as the analytical data warehouse for BMW data.</p>
-</section>
+<p>Snowflake is the analytical data platform used by the BMW Natural
+Language Analyst.</p>
 <section id="database">
 <h2>Database<a class="headerlink" href="#database" title="Link to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BMW_ANALYTICS</span>
@@ -223,70 +118,76 @@
 </pre></div>
 </div>
 </section>
-<section id="read-only-role">
-<h2>Read-Only Role<a class="headerlink" href="#read-only-role" title="Link to this heading"></a></h2>
-<p>The configured analytical role is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BMW_ANALYST_READONLY</span>
+<section id="tables">
+<h2>Tables<a class="headerlink" href="#tables" title="Link to this heading"></a></h2>
+<section id="bmw-vehicle-sales">
+<h3>BMW Vehicle Sales<a class="headerlink" href="#bmw-vehicle-sales" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BMW_VEHICLE_SALES</span>
 </pre></div>
 </div>
 </section>
-<section id="approved-tables">
-<h2>Approved Tables<a class="headerlink" href="#approved-tables" title="Link to this heading"></a></h2>
-<p>The application restricts analytical queries to:</p>
+<section id="bmw-warranty">
+<h3>BMW Warranty<a class="headerlink" href="#bmw-warranty" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BMW_WARRANTY</span>
+</pre></div>
+</div>
+</section>
+<section id="bmw-faults">
+<h3>BMW Faults<a class="headerlink" href="#bmw-faults" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BMW_FAULTS</span>
+</pre></div>
+</div>
+</section>
+<section id="bmw-battery">
+<h3>BMW Battery<a class="headerlink" href="#bmw-battery" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BMW_BATTERY</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="connection">
+<h2>Connection<a class="headerlink" href="#connection" title="Link to this heading"></a></h2>
+<p>The application reads Snowflake configuration from environment
+variables.</p>
+<p>The Snowflake connection uses:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">BMW_VEHICLE_SALES</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">BMW_WARRANTY</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">BMW_FAULTS</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">BMW_BATTERY</span></code></p></li>
+<li><p>account</p></li>
+<li><p>user</p></li>
+<li><p>password</p></li>
+<li><p>authenticator</p></li>
+<li><p>role</p></li>
+<li><p>warehouse</p></li>
+<li><p>database</p></li>
+<li><p>schema</p></li>
 </ul>
 </section>
-<section id="connection-module">
-<h2>Connection Module<a class="headerlink" href="#connection-module" title="Link to this heading"></a></h2>
-<p>The Snowflake connection implementation is located at:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">src</span><span class="o">/</span><span class="n">bmw_analyst</span><span class="o">/</span><span class="n">snowflake</span><span class="o">/</span><span class="n">connection</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-</section>
-<section id="query-executor">
-<h2>Query Executor<a class="headerlink" href="#query-executor" title="Link to this heading"></a></h2>
-<p>The query executor is located at:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">src</span><span class="o">/</span><span class="n">bmw_analyst</span><span class="o">/</span><span class="n">snowflake</span><span class="o">/</span><span class="n">executor</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
+<section id="connection-reuse">
+<h2>Connection Reuse<a class="headerlink" href="#connection-reuse" title="Link to this heading"></a></h2>
+<p>The application maintains a reusable Snowflake connection to reduce
+connection startup overhead.</p>
 </section>
 <section id="query-execution">
 <h2>Query Execution<a class="headerlink" href="#query-execution" title="Link to this heading"></a></h2>
-<p>The executor performs the following operations:</p>
-<ol class="arabic simple">
-<li><p>Open a Snowflake connection.</p></li>
-<li><p>Execute validated SQL.</p></li>
-<li><p>Apply the configured row limit.</p></li>
-<li><p>Apply the configured query timeout.</p></li>
-<li><p>Fetch the result.</p></li>
-<li><p>Close the cursor.</p></li>
-<li><p>Close the connection.</p></li>
-<li><p>Record execution status.</p></li>
-</ol>
+<p>Queries are executed through the Snowflake executor after SQL security
+validation.</p>
 </section>
-<section id="row-limit">
-<h2>Row Limit<a class="headerlink" href="#row-limit" title="Link to this heading"></a></h2>
-<p>The maximum configured result size is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1000</span> <span class="n">rows</span>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span>
+    <span class="n">MODEL</span><span class="p">,</span>
+    <span class="n">SUM</span><span class="p">(</span><span class="n">WARRANTY_COST</span><span class="p">)</span> <span class="n">AS</span> <span class="n">TOTAL_WARRANTY_COST</span>
+<span class="n">FROM</span> <span class="n">BMW_ANALYTICS</span><span class="o">.</span><span class="n">BMW_DATA</span><span class="o">.</span><span class="n">BMW_WARRANTY</span>
+<span class="n">WHERE</span> <span class="n">CITY</span> <span class="o">=</span> <span class="s1">'Chennai'</span>
+<span class="n">GROUP</span> <span class="n">BY</span> <span class="n">MODEL</span>
+<span class="n">ORDER</span> <span class="n">BY</span> <span class="n">TOTAL_WARRANTY_COST</span> <span class="n">DESC</span>
+<span class="n">LIMIT</span> <span class="mi">1</span>
 </pre></div>
 </div>
-</section>
-<section id="query-timeout">
-<h2>Query Timeout<a class="headerlink" href="#query-timeout" title="Link to this heading"></a></h2>
-<p>The configured query timeout is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">30</span> <span class="n">seconds</span>
+<p>Expected result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BMW</span> <span class="n">i5</span>
+<span class="mf">1136000.0</span>
 </pre></div>
 </div>
-</section>
-<section id="read-only-design">
-<h2>Read-Only Design<a class="headerlink" href="#read-only-design" title="Link to this heading"></a></h2>
-<p>The application is designed for analytical read operations.</p>
-<p>Database permissions and application-level SQL validation work together
-to prevent data modification operations.</p>
 </section>
 </section>
 
@@ -301,7 +202,7 @@ to prevent data modification operations.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2026, Arul Selvan.</p>
+    <p>&#169; Copyright 2026, BMW Natural Language Analyst.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

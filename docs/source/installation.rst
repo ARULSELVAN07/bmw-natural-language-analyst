@@ -1,101 +1,67 @@
 Installation
 ============
 
-Prerequisites
--------------
-
-The project requires:
+Requirements
+------------
 
 * Windows
 * Python 3.12
-* Git
+* Python virtual environment
+* Ollama
 * Snowflake account
-* AWS account
-* Amazon Bedrock access
+* Git
 
-Project Directory
------------------
+Create Virtual Environment
+--------------------------
 
-The project is located at::
-
-    C:\bmw-natural-language-analyst
-
-Virtual Environment
--------------------
-
-Create the virtual environment::
+::
 
     python -m venv bmwvenv
 
-Activate the environment::
+Activate Environment
+--------------------
+
+PowerShell::
 
     .\bmwvenv\Scripts\Activate.ps1
 
-Install Dependencies
---------------------
+Install Project
+---------------
 
-Install runtime dependencies::
-
-    python -m pip install -r requirements.txt
-
-Install development dependencies::
+::
 
     python -m pip install -e ".[dev]"
 
-Environment Configuration
--------------------------
+Verify Installation
+-------------------
 
-Create a ``.env`` file in the project root.
+::
 
-The environment file contains configuration for:
+    python -c "import bmw_analyst; print('BMW Analyst import successful')"
 
-* Snowflake
-* AWS
-* Amazon Bedrock
-* FastAPI
-* Streamlit
-* MCP
+Configure Environment
+---------------------
 
-Never commit real credentials to source control.
-
-Run FastAPI
------------
-
-From the project root::
-
-    uvicorn bmw_analyst.api.main:app --host 127.0.0.1 --port 8000 --reload
-
-The API is available at::
-
-    http://127.0.0.1:8000
-
-Run Streamlit
--------------
-
-Open another terminal and activate the virtual environment.
-
-Run::
-
-    streamlit run ui\streamlit_app.py
-
-The Streamlit application normally opens at::
-
-    http://127.0.0.1:8501
+Create the project ``.env`` file and configure the required Snowflake,
+Ollama, API and application settings.
 
 Run Tests
 ---------
 
-Run the complete test suite::
+::
 
-    python -m pytest -q
+    python -m pytest -q -m "not integration"
 
-Build Documentation
--------------------
+Run FastAPI
+-----------
 
-From the ``docs`` directory::
+::
 
-    python -m sphinx -b html source build\html
+    python -m uvicorn bmw_analyst.api.main:app --host 127.0.0.1 --port 8000 --reload
 
-Open the generated documentation::
+Run Streamlit
+-------------
 
-    start build\html\index.html
+::
+
+    streamlit run ui\streamlit_app.py

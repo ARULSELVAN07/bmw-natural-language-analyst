@@ -1,99 +1,114 @@
-from typing import Any
-
 from bmw_analyst.snowflake.executor import execute_query
-from bmw_analyst.security.permissions import is_tool_allowed
-from bmw_analyst.security.sql_validator import validate_sql
-from bmw_analyst.snowflake.queries import (
-    VEHICLE_SALES_QUERY,
-    WARRANTY_COST_QUERY,
-    FAULT_SUMMARY_QUERY,
-    BATTERY_STATUS_QUERY,
-)
-
-from .schemas import MCPToolResponse
 
 
-def _execute_tool(tool_name: str, sql: str) -> MCPToolResponse:
+def _tool_result(tool_name: str, rows: list[dict]) -> dict:
+    """Return the normalized tool payload expected by MCP clients and tests."""
+    return {
+        "success": True,
+        "tool": tool_name,
+        "data": rows,
+    }
+
+
+# -------------------------------------------------
+# Vehicle Sales
+# -------------------------------------------------
+
+def get_vehicle_sales() -> dict:
     """
-    Execute an approved read-only BMW analytics query.
+    Return BMW vehicle sales data.
     """
 
-    # Check MCP tool permission
-    if not is_tool_allowed(tool_name):
-        return MCPToolResponse(
-            success=False,
-            tool=tool_name,
-            error="Tool is not approved.",
-        )
-
-    # Check SQL security
-    if not validate_sql(sql):
-        return MCPToolResponse(
-            success=False,
-            tool=tool_name,
-            error="SQL validation failed.",
-        )
-
-    try:
-        data = execute_query(sql)
-
-        return MCPToolResponse(
-            success=True,
-            tool=tool_name,
-            data=data,
-        )
-
-    except Exception as exc:
-        return MCPToolResponse(
-            success=False,
-            tool=tool_name,
-            error=str(exc),
-        )
-
-
-def get_vehicle_sales() -> dict[str, Any]:
+    sql = """
+        SELECT
+            VEHICLE_ID,
+            MODEL,
+            CITY,
+            SALE_DATE,
+            SALES_AMOUNT,
+            QUANTITY
+        FROM BMW_ANALYTICS.BMW_DATA.BMW_VEHICLE_SALES
+        ORDER BY SALE_DATE DESC
+        LIMIT 1000
     """
-    Get BMW vehicle sales data.
+
+    return _tool_result("get_vehicle_sales", execute_query(sql))
+
+
+# -------------------------------------------------
+# Warranty Cost
+# -------------------------------------------------
+
+def get_warranty_cost() -> dict:
     """
-    response = _execute_tool(
-        "get_vehicle_sales",
-        VEHICLE_SALES_QUERY,
-    )
-
-    return response.model_dump()
-
-
-def get_warranty_cost() -> dict[str, Any]:
+    Return BMW warranty cost data.
     """
-    Get BMW warranty cost data.
+
+    sql = """
+        SELECT
+            VEHICLE_ID,
+            MODEL,
+            CITY,
+            WARRANTY_DATE,
+            FAULT_TYPE,
+            WARRANTY_COST
+        FROM BMW_ANALYTICS.BMW_DATA.BMW_WARRANTY
+        ORDER BY WARRANTY_DATE DESC
+        LIMIT 1000
     """
-    response = _execute_tool(
-        "get_warranty_cost",
-        WARRANTY_COST_QUERY,
-    )
 
-    return response.model_dump()
+    return _tool_result("get_warranty_cost", execute_query(sql))
 
 
-def get_fault_summary() -> dict[str, Any]:
+# -------------------------------------------------
+# Fault Summary
+# -------------------------------------------------
+
+def get_fault_summary() -> dict:
     """
-    Get BMW fault summary data.
+    Return BMW fault summary.
     """
-    response = _execute_tool(
-        "get_fault_summary",
-        FAULT_SUMMARY_QUERY,
-    )
 
-    return response.model_dump()
-
-
-def get_battery_status() -> dict[str, Any]:
+    sql = """
+        SELECT
+            MODEL,
+            CITY,
+            FAULT_TYPE,
+            SEVERITY,
+            COUNT(*) AS FAULT_COUNT
+        FROM BMW_ANALYTICS.BMW_DATA.BMW_FAULTS
+        GROUP BY
+            MODEL,
+            CITY,
+            FAULT_TYPE,
+            SEVERITY
+        ORDER BY FAULT_COUNT DESC
+        LIMIT 1000
     """
-    Get BMW battery status data.
-    """
-    response = _execute_tool(
-        "get_battery_status",
-        BATTERY_STATUS_QUERY,
-    )
 
-    return response.model_dump()
+    return _tool_result("get_fault_summary", execute_query(sql))
+
+
+# -------------------------------------------------
+# Battery Status
+# -------------------------------------------------
+
+def get_battery_status() -> dict:
+    """
+    Return BMW battery status.
+    """
+
+    sql = """
+        SELECT
+            VEHICLE_ID,
+            MODEL,
+            CITY,
+            BATTERY_DATE,
+            BATTERY_PERCENTAGE,
+            BATTERY_STATUS
+        FROM BMW_ANALYTICS.BMW_DATA.BMW_BATTERY
+        ORDER BY BATTERY_DATE DESC
+        LIMIT 1000
+    """
+
+    return _tool_result("get_battery_status", execute_query(sql))

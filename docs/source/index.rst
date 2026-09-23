@@ -1,55 +1,9 @@
-BMW Natural Language Data Analyst
-=================================
+BMW Natural Language Analyst
+============================
 
-Welcome to the documentation for the BMW Natural Language Data Analyst.
-
-This project allows BMW business users to ask analytical questions using
-natural language instead of manually writing SQL queries.
-
-Example Questions
-------------------
-
-* Which BMW model had the highest warranty cost in Chennai?
-* Which BMW model had the highest vehicle sales?
-* What are the most common BMW faults?
-* What is the current battery status?
-
-Architecture
-------------
-
-::
-
-    User
-      |
-      v
-    Streamlit UI
-      |
-      v
-    FastAPI
-      |
-      v
-    Agent
-      |
-      v
-    Intent Router
-      |
-      v
-    SQL Generator
-      |
-      v
-    SQL Validator
-      |
-      v
-    MCP Server
-      |
-      v
-    Snowflake
-      |
-      v
-    Query Result
-      |
-      v
-    Narrative Explanation
+The BMW Natural Language Analyst allows business users to ask BMW
+analytics questions using natural language instead of manually writing
+SQL.
 
 Documentation
 -------------
@@ -58,8 +12,9 @@ Documentation
    :maxdepth: 2
    :caption: Contents:
 
-   architecture
    installation
+   architecture
+   project_structure
    configuration
    mcp
    snowflake
@@ -67,39 +22,61 @@ Documentation
    api
    testing
    terraform
-   project_structure
 
-Key Features
-------------
+Overview
+--------
 
-* Natural-language BMW analytics
-* MCP-based tool architecture
-* Amazon Bedrock integration
-* Snowflake integration
-* Read-only database access
-* SQL validation
-* Approved-table restrictions
-* Query row limits
-* Query timeout protection
-* Audit logging
-* FastAPI API
-* Streamlit interface
-* Automated testing
+The application follows this flow:
+
+::
+
+    User
+      |
+      v
+    Llama 3.2 1B / Agent
+      |
+      v
+    MCP Client
+      |
+      v
+    MCP Server
+      |
+      v
+    SQL Validation
+      |
+      v
+    Snowflake
+      |
+      v
+    Result
+      |
+      v
+    Response
+
+Acceptance Question
+-------------------
+
+::
+
+    Which BMW model had the highest warranty cost in Chennai?
+
+Expected result:
+
+::
+
+    BMW i5
+    Total warranty cost: 1,136,000
 
 Technology Stack
 ----------------
 
 * Python 3.12
+* Ollama
+* Llama 3.2 1B
+* MCP
+* Snowflake
 * FastAPI
 * Streamlit
-* Model Context Protocol
-* Amazon Bedrock
-* Snowflake
-* Pytest
+* pytest
+* Terraform
 * Sphinx
-
-Project Status
---------------
-
-The project provides a natural-language interface for querying approved
-BMW analytical data while enforcing read-only SQL access.

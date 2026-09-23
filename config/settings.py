@@ -13,28 +13,34 @@ from dotenv import load_dotenv
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 ENV_FILE = PROJECT_ROOT / ".env"
 
-# Load .env when it exists.
-# Existing environment variables are NOT overwritten.
-if ENV_FILE.exists():
-    load_dotenv(ENV_FILE, override=False)
+load_dotenv(ENV_FILE)
 
 
 # -------------------------------------------------
 # AWS Configuration
 # -------------------------------------------------
 
-AWS_REGION = os.getenv("AWS_REGION", "ap-south-1")
+AWS_REGION = os.getenv(
+    "AWS_REGION",
+    "ap-south-1",
+)
 
+
+# -------------------------------------------------
+# Optional AWS Secrets Manager
+# -------------------------------------------------
 
 def _load_secret_values() -> dict[str, str]:
     """
-    Load optional configuration from AWS Secrets Manager.
+    Load optional application secrets from AWS Secrets Manager.
 
-    Secrets Manager is only contacted when
-    AWS_SECRETS_MANAGER_SECRET_NAME is configured.
+    This is retained for compatibility with the existing project.
+    Ollama itself does not require AWS.
     """
 
-    secret_name = os.getenv("AWS_SECRETS_MANAGER_SECRET_NAME")
+    secret_name = os.getenv(
+        "AWS_SECRETS_MANAGER_SECRET_NAME"
+    )
 
     if not secret_name:
         return {}
@@ -73,37 +79,24 @@ _SECRET_VALUES = _load_secret_values()
 
 def get_required_env(name: str) -> str:
     """
-    Resolve configuration in this order:
+    Read a required environment variable.
 
-    1. Operating-system environment
-       - GitHub Actions
-       - Docker
-       - Kubernetes
-       - local terminal
-
-    2. .env file
-
-    3. AWS Secrets Manager
-
-    This allows CI to run without requiring
-    a .env file.
+    Environment variables take priority over
+    Secrets Manager values.
     """
 
-    value = os.getenv(name)
-
-    if value:
-        return value
-
-    value = _SECRET_VALUES.get(name)
-
-    if value:
-        return value
-
-    raise RuntimeError(
-        f"Required configuration '{name}' is not set. "
-        f"Set it as an environment variable, in .env, "
-        f"or in AWS Secrets Manager."
+    value = (
+        os.getenv(name)
+        or _SECRET_VALUES.get(name)
     )
+
+    if not value:
+        raise RuntimeError(
+            f"Required environment variable '{name}' "
+            f"is missing from {ENV_FILE}"
+        )
+
+    return value
 
 
 # -------------------------------------------------
@@ -144,6 +137,10 @@ SNOWFLAKE_SCHEMA = get_required_env(
 
 
 def get_snowflake_config() -> dict:
+    """
+    Return Snowflake connection configuration.
+    """
+
     return {
         "account": SNOWFLAKE_ACCOUNT,
         "user": SNOWFLAKE_USER,
@@ -157,11 +154,17 @@ def get_snowflake_config() -> dict:
 
 
 # -------------------------------------------------
-# AWS / Bedrock Configuration
+# Ollama / Qwen Configuration
 # -------------------------------------------------
 
-BEDROCK_MODEL_ID = get_required_env(
-    "BEDROCK_MODEL_ID"
+OLLAMA_BASE_URL = os.getenv(
+    "OLLAMA_BASE_URL",
+    "http://127.0.0.1:11434",
+)
+
+OLLAMA_MODEL = os.getenv(
+    "OLLAMA_MODEL",
+    "qwen2.5:7b",
 )
 
 
@@ -192,8 +195,7 @@ STREAMLIT_PORT = int(
 
 
 # Optional for local development.
-# Production deployments should configure this
-# through environment variables or Secrets Manager.
+# Production deployments should set it.
 
 API_KEY = (
     os.getenv("API_KEY")

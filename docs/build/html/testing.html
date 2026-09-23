@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Testing &mdash; BMW Natural Language Data Analyst</title>
+  <title>Testing &mdash; BMW Natural Language Analyst  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Terraform" href="terraform.html" />
-    <link rel="prev" title="API" href="api.html" /> 
+    <link rel="prev" title="API Documentation" href="api.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +32,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            BMW Natural Language Data Analyst
+            BMW Natural Language Analyst
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -44,135 +44,31 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#system-architecture">System Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#main-components">Main Components</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#agent">Agent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#intent-router">Intent Router</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#sql-generator">SQL Generator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#sql-validator">SQL Validator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#mcp-client">MCP Client</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#mcp-server">MCP Server</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#snowflake-executor">Snowflake Executor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#security-layer">Security Layer</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#end-to-end-flow">End-to-End Flow</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#project-directory">Project Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#virtual-environment">Virtual Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-dependencies">Install Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#environment-configuration">Environment Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#run-fastapi">Run FastAPI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#run-streamlit">Run Streamlit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#run-tests">Run Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#build-documentation">Build Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#snowflake-configuration">Snowflake Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#aws-configuration">AWS Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#application-configuration">Application Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#example-configuration">Example Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#approved-tables">Approved Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#operational-limits">Operational Limits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#environment-security">Environment Security</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#mcp-server">MCP Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#available-tools">Available Tools</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#vehicle-sales">Vehicle Sales</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#warranty-cost">Warranty Cost</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#fault-summary">Fault Summary</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#battery-status">Battery Status</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#approved-query-execution">Approved Query Execution</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#mcp-client">MCP Client</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#execution-flow">Execution Flow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#security">Security</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="snowflake.html">Snowflake</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#database">Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#schema">Schema</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#warehouse">Warehouse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#read-only-role">Read-Only Role</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#approved-tables">Approved Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#connection-module">Connection Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#query-executor">Query Executor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#query-execution">Query Execution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#row-limit">Row Limit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#query-timeout">Query Timeout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#read-only-design">Read-Only Design</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="security.html#security-overview">Security Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#read-only-database-role">Read-Only Database Role</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#sql-validation">SQL Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#blocked-sql-commands">Blocked SQL Commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#approved-tables">Approved Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#query-limits">Query Limits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#query-timeout">Query Timeout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#question-length">Question Length</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#audit-logging">Audit Logging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#credential-protection">Credential Protection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#security-testing">Security Testing</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#api-implementation">API Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#ask-endpoint">Ask Endpoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#request">Request</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#response">Response</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#powershell-example">PowerShell Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#fastapi-documentation">FastAPI Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#api-workflow">API Workflow</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snowflake.html">Snowflake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Testing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#run-the-test-suite">Run the Test Suite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#test-files">Test Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#run-tests">Run Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-all-tests">Run All Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-categories">Test Categories</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#api-tests">API Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#agent-tests">Agent Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mcp-client-tests">MCP Client Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mcp-tool-tests">MCP Tool Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mcp-tests">MCP Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#router-tests">Router Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sql-validator-tests">SQL Validator Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#query-limit-tests">Query Limit Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#snowflake-tests">Snowflake Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#security-testing">Security Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#continuous-integration">Continuous Integration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ci-security">CI Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#current-result">Current Result</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="terraform.html">Terraform</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#terraform-directory">Terraform Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#snowflake-terraform">Snowflake Terraform</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#terraform-workflow">Terraform Workflow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#infrastructure-safety">Infrastructure Safety</a></li>
-<li class="toctree-l2"><a class="reference internal" href="terraform.html#credentials">Credentials</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project Structure</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="project_structure.html#important-directories">Important Directories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="project_structure.html#configuration-files">Configuration Files</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="terraform.html">Terraform</a></li>
 </ul>
 
         </div>
@@ -181,7 +77,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">BMW Natural Language Data Analyst</a>
+          <a href="index.html">BMW Natural Language Analyst</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -201,107 +97,60 @@
              
   <section id="testing">
 <h1>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h1>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>The project uses Pytest for automated testing.</p>
+<p>The BMW Natural Language Analyst uses pytest for automated testing.</p>
+<section id="run-tests">
+<h2>Run Tests<a class="headerlink" href="#run-tests" title="Link to this heading"></a></h2>
+<p>Run all non-integration tests:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pytest</span> <span class="o">-</span><span class="n">q</span> <span class="o">-</span><span class="n">m</span> <span class="s2">"not integration"</span>
+</pre></div>
+</div>
 </section>
-<section id="run-the-test-suite">
-<h2>Run the Test Suite<a class="headerlink" href="#run-the-test-suite" title="Link to this heading"></a></h2>
-<p>From the project root:</p>
+<section id="run-all-tests">
+<h2>Run All Tests<a class="headerlink" href="#run-all-tests" title="Link to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pytest</span> <span class="o">-</span><span class="n">q</span>
 </pre></div>
 </div>
 </section>
-<section id="test-files">
-<h2>Test Files<a class="headerlink" href="#test-files" title="Link to this heading"></a></h2>
+<section id="test-categories">
+<h2>Test Categories<a class="headerlink" href="#test-categories" title="Link to this heading"></a></h2>
 <section id="api-tests">
 <h3>API Tests<a class="headerlink" href="#api-tests" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tests</span><span class="o">/</span><span class="n">test_api</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Tests FastAPI application behavior.</p>
+<p>Tests FastAPI endpoints and API behavior.</p>
 </section>
 <section id="agent-tests">
 <h3>Agent Tests<a class="headerlink" href="#agent-tests" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tests</span><span class="o">/</span><span class="n">test_agent</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Tests natural-language analysis behavior.</p>
+<p>Tests the BMW analyst agent.</p>
 </section>
-<section id="mcp-client-tests">
-<h3>MCP Client Tests<a class="headerlink" href="#mcp-client-tests" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tests</span><span class="o">/</span><span class="n">test_mcp_client</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Tests MCP client behavior.</p>
-</section>
-<section id="mcp-tool-tests">
-<h3>MCP Tool Tests<a class="headerlink" href="#mcp-tool-tests" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tests</span><span class="o">/</span><span class="n">test_mcp_tools</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Tests MCP tool functionality.</p>
+<section id="mcp-tests">
+<h3>MCP Tests<a class="headerlink" href="#mcp-tests" title="Link to this heading"></a></h3>
+<p>Tests MCP client and server behavior.</p>
 </section>
 <section id="router-tests">
 <h3>Router Tests<a class="headerlink" href="#router-tests" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tests</span><span class="o">/</span><span class="n">test_router</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Tests analytical intent routing.</p>
+<p>Tests natural-language intent routing.</p>
 </section>
 <section id="sql-validator-tests">
 <h3>SQL Validator Tests<a class="headerlink" href="#sql-validator-tests" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tests</span><span class="o">/</span><span class="n">test_sql_validator</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Tests SQL safety rules.</p>
+<p>Tests read-only SQL security rules.</p>
 </section>
 <section id="query-limit-tests">
 <h3>Query Limit Tests<a class="headerlink" href="#query-limit-tests" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tests</span><span class="o">/</span><span class="n">test_query_limits</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Tests query-result limits.</p>
+<p>Tests maximum query result limits.</p>
 </section>
 <section id="snowflake-tests">
 <h3>Snowflake Tests<a class="headerlink" href="#snowflake-tests" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tests</span><span class="o">/</span><span class="n">test_snowflake</span><span class="o">.</span><span class="n">py</span>
+<p>Tests Snowflake connectivity and execution.</p>
+</section>
+</section>
+<section id="current-result">
+<h2>Current Result<a class="headerlink" href="#current-result" title="Link to this heading"></a></h2>
+<p>The non-integration test suite currently passes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">60</span> <span class="n">passed</span>
+<span class="mi">2</span> <span class="n">deselected</span>
 </pre></div>
 </div>
-<p>Tests Snowflake-related functionality.</p>
-</section>
-</section>
-<section id="security-testing">
-<h2>Security Testing<a class="headerlink" href="#security-testing" title="Link to this heading"></a></h2>
-<p>Security tests verify that destructive SQL statements are rejected.</p>
-<p>Examples include:</p>
-<ul class="simple">
-<li><p>INSERT</p></li>
-<li><p>UPDATE</p></li>
-<li><p>DELETE</p></li>
-<li><p>DROP</p></li>
-<li><p>ALTER</p></li>
-<li><p>TRUNCATE</p></li>
-</ul>
-</section>
-<section id="continuous-integration">
-<h2>Continuous Integration<a class="headerlink" href="#continuous-integration" title="Link to this heading"></a></h2>
-<p>The project contains a GitHub Actions workflow for automated testing.</p>
-<p>The CI workflow:</p>
-<ol class="arabic simple">
-<li><p>Checks out the repository.</p></li>
-<li><p>Installs Python 3.12.</p></li>
-<li><p>Installs project dependencies.</p></li>
-<li><p>Installs development dependencies.</p></li>
-<li><p>Runs Pytest.</p></li>
-</ol>
-</section>
-<section id="ci-security">
-<h2>CI Security<a class="headerlink" href="#ci-security" title="Link to this heading"></a></h2>
-<p>Normal unit and security tests should not require production Snowflake
-credentials.</p>
-<p>Live database integration tests should be isolated when external
-infrastructure is required.</p>
+<p>The Starlette/AnyIO deprecation warning does not represent a test
+failure.</p>
 </section>
 </section>
 
@@ -309,14 +158,14 @@ infrastructure is required.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="api.html" class="btn btn-neutral float-left" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-left" title="API Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="terraform.html" class="btn btn-neutral float-right" title="Terraform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2026, Arul Selvan.</p>
+    <p>&#169; Copyright 2026, BMW Natural Language Analyst.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

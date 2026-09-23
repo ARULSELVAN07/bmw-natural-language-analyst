@@ -1,32 +1,43 @@
-API
-===
+API Documentation
+=================
 
-Overview
---------
+The BMW Natural Language Analyst provides a FastAPI application for
+submitting natural-language BMW analytics questions.
 
-The BMW Natural Language Data Analyst exposes a FastAPI service for
-natural-language BMW analysis.
-
-API Implementation
--------------------
-
-The API implementation is located at::
-
-    src/bmw_analyst/api/main.py
-
-Ask Endpoint
+API Base URL
 ------------
 
-The main analytical endpoint is:
+::
+
+    http://127.0.0.1:8000
+
+Endpoints
+---------
+
+Health Check
+~~~~~~~~~~~
+
+::
+
+    GET /health
+
+Checks whether the API application is running.
+
+Readiness Check
+~~~~~~~~~~~~~~~
+
+::
+
+    GET /ready
+
+Checks whether the application can communicate with Snowflake.
+
+Ask Question
+~~~~~~~~~~~~
 
 ::
 
     POST /ask
-
-Request
--------
-
-The endpoint accepts a natural-language question.
 
 Example request::
 
@@ -34,64 +45,33 @@ Example request::
         "question": "Which BMW model had the highest warranty cost in Chennai?"
     }
 
-Response
---------
+Example response::
 
-The response can contain:
+    {
+        "question": "Which BMW model had the highest warranty cost in Chennai?",
+        "intent": "warranty_cost",
+        "sql": "...",
+        "data": [
+            {
+                "MODEL": "BMW i5",
+                "TOTAL_WARRANTY_COST": 1136000.0
+            }
+        ],
+        "answer": "BMW i5 had the highest warranty cost in Chennai."
+    }
 
-* Original question
-* Detected intent
-* Generated SQL
-* Query data
-* Narrative answer
-
-PowerShell Example
-------------------
-
-::
-
-    $body = @{
-        question = "Which BMW model had the highest warranty cost in Chennai?"
-    } | ConvertTo-Json
-
-    Invoke-RestMethod `
-        -Uri "http://127.0.0.1:8000/ask" `
-        -Method Post `
-        -ContentType "application/json" `
-        -Body $body
-
-FastAPI Documentation
----------------------
-
-When the API is running, FastAPI provides interactive documentation at::
-
-    http://127.0.0.1:8000/docs
-
-ReDoc is available at::
-
-    http://127.0.0.1:8000/redoc
-
-API Workflow
-------------
+Metrics
+~~~~~~~
 
 ::
 
-    HTTP Request
-         |
-         v
-    Question Validation
-         |
-         v
-    Agent
-         |
-         v
-    MCP
-         |
-         v
-    Snowflake
-         |
-         v
-    Narrative Response
-         |
-         v
-    HTTP Response
+    GET /metrics
+
+Returns application metrics.
+
+Running the API
+---------------
+
+::
+
+    python -m uvicorn bmw_analyst.api.main:app --host 127.0.0.1 --port 8000 --reload

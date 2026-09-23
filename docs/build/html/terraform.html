@@ -6,20 +6,19 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terraform &mdash; BMW Natural Language Data Analyst</title>
+  <title>Terraform &mdash; BMW Natural Language Analyst  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Project Structure" href="project_structure.html" />
     <link rel="prev" title="Testing" href="testing.html" /> 
 </head>
 
@@ -32,7 +31,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            BMW Natural Language Data Analyst
+            BMW Natural Language Analyst
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -44,133 +43,20 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#system-architecture">System Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#main-components">Main Components</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#agent">Agent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#intent-router">Intent Router</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#sql-generator">SQL Generator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#sql-validator">SQL Validator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#mcp-client">MCP Client</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#mcp-server">MCP Server</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#snowflake-executor">Snowflake Executor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="architecture.html#security-layer">Security Layer</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="architecture.html#end-to-end-flow">End-to-End Flow</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#project-directory">Project Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#virtual-environment">Virtual Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-dependencies">Install Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#environment-configuration">Environment Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#run-fastapi">Run FastAPI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#run-streamlit">Run Streamlit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#run-tests">Run Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#build-documentation">Build Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#snowflake-configuration">Snowflake Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#aws-configuration">AWS Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#application-configuration">Application Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#example-configuration">Example Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#approved-tables">Approved Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#operational-limits">Operational Limits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#environment-security">Environment Security</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#mcp-server">MCP Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#available-tools">Available Tools</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#vehicle-sales">Vehicle Sales</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#warranty-cost">Warranty Cost</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#fault-summary">Fault Summary</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#battery-status">Battery Status</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mcp.html#approved-query-execution">Approved Query Execution</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#mcp-client">MCP Client</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#execution-flow">Execution Flow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mcp.html#security">Security</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="snowflake.html">Snowflake</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#database">Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#schema">Schema</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#warehouse">Warehouse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#read-only-role">Read-Only Role</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#approved-tables">Approved Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#connection-module">Connection Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#query-executor">Query Executor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#query-execution">Query Execution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#row-limit">Row Limit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#query-timeout">Query Timeout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="snowflake.html#read-only-design">Read-Only Design</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="security.html#security-overview">Security Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#read-only-database-role">Read-Only Database Role</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#sql-validation">SQL Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#blocked-sql-commands">Blocked SQL Commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#approved-tables">Approved Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#query-limits">Query Limits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#query-timeout">Query Timeout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#question-length">Question Length</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#audit-logging">Audit Logging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#credential-protection">Credential Protection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#security-testing">Security Testing</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#api-implementation">API Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#ask-endpoint">Ask Endpoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#request">Request</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#response">Response</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#powershell-example">PowerShell Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#fastapi-documentation">FastAPI Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#api-workflow">API Workflow</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#run-the-test-suite">Run the Test Suite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#test-files">Test Files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#api-tests">API Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#agent-tests">Agent Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#mcp-client-tests">MCP Client Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#mcp-tool-tests">MCP Tool Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#router-tests">Router Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#sql-validator-tests">SQL Validator Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#query-limit-tests">Query Limit Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#snowflake-tests">Snowflake Tests</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#security-testing">Security Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#continuous-integration">Continuous Integration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html#ci-security">CI Security</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snowflake.html">Snowflake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Terraform</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#terraform-directory">Terraform Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#snowflake-terraform">Snowflake Terraform</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#terraform-workflow">Terraform Workflow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#infrastructure-safety">Infrastructure Safety</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#credentials">Credentials</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="project_structure.html">Project Structure</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="project_structure.html#important-directories">Important Directories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="project_structure.html#configuration-files">Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#purpose">Purpose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#infrastructure">Infrastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#state">State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sensitive-values">Sensitive Values</a></li>
 </ul>
 </li>
 </ul>
@@ -181,7 +67,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">BMW Natural Language Data Analyst</a>
+          <a href="index.html">BMW Natural Language Analyst</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -201,53 +87,28 @@
              
   <section id="terraform">
 <h1>Terraform<a class="headerlink" href="#terraform" title="Link to this heading"></a></h1>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>Terraform configuration is maintained for infrastructure-as-code resources.</p>
-</section>
-<section id="terraform-directory">
-<h2>Terraform Directory<a class="headerlink" href="#terraform-directory" title="Link to this heading"></a></h2>
-<p>The project Terraform configuration is located under:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">terraform</span><span class="o">/</span>
-</pre></div>
-</div>
-</section>
-<section id="snowflake-terraform">
-<h2>Snowflake Terraform<a class="headerlink" href="#snowflake-terraform" title="Link to this heading"></a></h2>
-<p>Snowflake-related Terraform configuration is located under:</p>
+<p>The project contains Terraform configuration under:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">terraform</span><span class="o">/</span><span class="n">snowflake</span><span class="o">/</span>
 </pre></div>
 </div>
+<section id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Link to this heading"></a></h2>
+<p>Terraform can be used to define and manage infrastructure required by
+the BMW analytics platform.</p>
 </section>
-<section id="terraform-workflow">
-<h2>Terraform Workflow<a class="headerlink" href="#terraform-workflow" title="Link to this heading"></a></h2>
-<p>Initialize Terraform:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">terraform</span> <span class="n">init</span>
-</pre></div>
-</div>
-<p>Validate the configuration:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">terraform</span> <span class="n">validate</span>
-</pre></div>
-</div>
-<p>Create an execution plan:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">terraform</span> <span class="n">plan</span>
-</pre></div>
-</div>
-<p>Apply infrastructure changes:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">terraform</span> <span class="n">apply</span>
-</pre></div>
-</div>
+<section id="infrastructure">
+<h2>Infrastructure<a class="headerlink" href="#infrastructure" title="Link to this heading"></a></h2>
+<p>The Terraform configuration is intended to support infrastructure
+deployment in a repeatable and version-controlled way.</p>
 </section>
-<section id="infrastructure-safety">
-<h2>Infrastructure Safety<a class="headerlink" href="#infrastructure-safety" title="Link to this heading"></a></h2>
-<p>Always review the Terraform plan before applying infrastructure changes.</p>
-<p>Terraform state may contain sensitive infrastructure information and should
-not be committed to source control when it contains sensitive data.</p>
+<section id="state">
+<h2>State<a class="headerlink" href="#state" title="Link to this heading"></a></h2>
+<p>Terraform state files must not be committed to Git.</p>
 </section>
-<section id="credentials">
-<h2>Credentials<a class="headerlink" href="#credentials" title="Link to this heading"></a></h2>
-<p>Do not hard-code Snowflake, AWS, or other credentials in Terraform files.</p>
-<p>Use appropriate environment variables or secure credential mechanisms.</p>
+<section id="sensitive-values">
+<h2>Sensitive Values<a class="headerlink" href="#sensitive-values" title="Link to this heading"></a></h2>
+<p>Credentials and sensitive infrastructure values must be stored
+securely and must not be committed to the repository.</p>
 </section>
 </section>
 
@@ -256,13 +117,12 @@ not be committed to source control when it contains sensitive data.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="testing.html" class="btn btn-neutral float-left" title="Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="project_structure.html" class="btn btn-neutral float-right" title="Project Structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2026, Arul Selvan.</p>
+    <p>&#169; Copyright 2026, BMW Natural Language Analyst.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

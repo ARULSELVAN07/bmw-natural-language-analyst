@@ -1,49 +1,25 @@
 Project Structure
 =================
 
-The main project structure is:
+The project is organized as follows:
 
 ::
 
     bmw-natural-language-analyst/
     |
     +-- config/
-    |   +-- settings.py
     |   +-- __init__.py
+    |   +-- settings.py
     |
     +-- src/
     |   +-- bmw_analyst/
-    |       |
     |       +-- agent/
-    |       |   +-- agent.py
-    |       |   +-- router.py
-    |       |   +-- sql_generator.py
-    |       |   +-- prompts.py
-    |       |
     |       +-- api/
-    |       |   +-- main.py
-    |       |
     |       +-- mcp_client/
-    |       |   +-- client.py
-    |       |   +-- models.py
-    |       |
     |       +-- mcp_server/
-    |       |   +-- server.py
-    |       |   +-- tools.py
-    |       |   +-- schemas.py
-    |       |
-    |       +-- snowflake/
-    |       |   +-- connection.py
-    |       |   +-- executor.py
-    |       |   +-- queries.py
-    |       |
-    |       +-- security/
-    |       |   +-- sql_validator.py
-    |       |   +-- permissions.py
-    |       |   +-- logging_config.py
-    |       |
     |       +-- models/
-    |           +-- schemas.py
+    |       +-- security/
+    |       +-- snowflake/
     |
     +-- tests/
     |   +-- test_api.py
@@ -58,20 +34,14 @@ The main project structure is:
     +-- ui/
     |   +-- streamlit_app.py
     |
-    +-- terraform/
-    |   +-- snowflake/
-    |
     +-- data/
     |   +-- sample/
     |
-    +-- logs/
+    +-- terraform/
+    |   +-- snowflake/
     |
     +-- docs/
     |   +-- source/
-    |   +-- build/
-    |
-    +-- .github/
-    |   +-- workflows/
     |
     +-- .env
     +-- .gitignore
@@ -80,48 +50,35 @@ The main project structure is:
     +-- run.py
     +-- README.md
 
-Important Directories
----------------------
+Agent
+-----
 
-``src/bmw_analyst/agent/``
-    Natural-language analysis workflow.
+The ``agent`` package contains:
 
-``src/bmw_analyst/mcp_server/``
-    MCP server implementation and tools.
+* ``agent.py``
+* ``router.py``
+* ``sql_generator.py``
+* ``prompts.py``
 
-``src/bmw_analyst/mcp_client/``
-    MCP client functionality.
+MCP
+---
 
-``src/bmw_analyst/snowflake/``
-    Snowflake connection and query execution.
+The ``mcp_client`` and ``mcp_server`` packages implement MCP
+communication.
 
-``src/bmw_analyst/security/``
-    SQL validation, permissions, and logging.
+Snowflake
+---------
 
-``tests/``
-    Automated tests.
+The ``snowflake`` package contains connection, execution and query
+logic.
 
-``ui/``
-    Streamlit user interface.
+Security
+--------
 
-``terraform/``
-    Infrastructure-as-code configuration.
+The ``security`` package contains SQL validation, permissions and
+logging configuration.
 
-``docs/``
-    Sphinx documentation source and generated HTML files.
+Tests
+-----
 
-Configuration Files
--------------------
-
-``pyproject.toml``
-    Project metadata and Python dependencies.
-
-``requirements.txt``
-    Runtime dependencies.
-
-``.env``
-    Local environment configuration and secrets. This file must not be
-    committed to Git.
-
-``.gitignore``
-    Files excluded from source control.
+The ``tests`` directory contains unit and integration tests.

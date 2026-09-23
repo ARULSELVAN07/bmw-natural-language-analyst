@@ -1,3 +1,8 @@
+import asyncio
+
+from bmw_analyst.security.sql_validator import validate_sql
+
+
 def ask(self, question: str) -> dict:
 
     if not question or not question.strip():
