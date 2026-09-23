@@ -24,9 +24,9 @@ jobs:
       SNOWFLAKE_DATABASE: BMW_ANALYTICS
       SNOWFLAKE_SCHEMA: BMW_DATA
 
-      # AWS / Bedrock configuration
-      AWS_REGION: ap-south-1
-      BEDROCK_MODEL_ID: global.amazon.nova-2-lite-v1:0
+      # Local Ollama configuration
+      OLLAMA_BASE_URL: http://127.0.0.1:11434
+      OLLAMA_MODEL: llama3.2:1b
 
       # API configuration
       API_HOST: 127.0.0.1
